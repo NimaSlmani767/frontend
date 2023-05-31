@@ -95,7 +95,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
             </VField>
           </Field>
         </div>
-        <div class="form-fields-field">
+        <div class="form-fields-field mb-20px mb-0">
           <Field v-slot="{ field, errorMessage }" name="createdAt">
             <VField>
               <label>تاریخ</label>
@@ -129,15 +129,21 @@ select {
   position: relative;
   color: rgb(60, 60, 60);
 }
-.form-fields {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-.form-fields-field {
-  width: 49%;
-}
+
 .mb-20px {
   margin-bottom: 20px;
+}
+@media screen and (min-width: 700px) {
+  .form-fields {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .form-fields-field {
+    width: 49%;
+  }
+  .mb-0 {
+    margin-bottom: 0;
+  }
 }
 </style>
