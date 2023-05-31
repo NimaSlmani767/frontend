@@ -144,7 +144,7 @@ watch(
 
     <Transition name="slide-x"> </Transition>
 
-    <LanguagesPanel />
+    <!-- <LanguagesPanel /> -->
 
     <VViewWrapper>
       <VPageContentWrapper>
