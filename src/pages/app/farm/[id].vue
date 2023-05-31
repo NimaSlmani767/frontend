@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useFarmStore } from '/@src/stores/farm'
+import { ref } from 'vue'
 
 // define props for using in the component
 // Access params with `params.id`
+const showLossesModal = ref(false)
+const showFeedingCheckingModal = ref(false)
+const showWaterQualityModal = ref(false)
+
 const params = defineProps({
   id: {
     type: String,
@@ -20,10 +25,17 @@ onMounted(async () => {
 
 <template>
   <div class="page-content-inner">
+    <!-- <FeedingChecking :show="showLossesModal" />
+    <Losses :show="showFeedingCheckingModal" />
+    <WaterQuality :show="showWaterQualityModal" /> -->
     <div class="nav-buttons-ponds">
-      <VButton color="light-border" raised>تلفات</VButton>
-      <VButton color="light-border" raised>غذادهی</VButton>
-      <VButton color="light-border" raised>اندازه گیری</VButton>
+      <VButton color="light-border" @click="showLossesModal = true" raised>تلفات</VButton>
+      <VButton color="light-border" @click="showFeedingCheckingModal = true" raised
+        >غذادهی</VButton
+      >
+      <VButton color="light-border" @click="showWaterQualityModal = true" raised
+        >اندازه گیری</VButton
+      >
     </div>
     <!-- <TestDashboard /> -->
     <div class="business-dashboard course-dashboard">
