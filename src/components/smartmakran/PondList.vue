@@ -68,22 +68,52 @@ let filteredPonds = computed<IPond[]>(() => {
                   <i aria-hidden="true" class="lnil lnil-home"></i>
                 </VIconBox>
                 <div class="meta-left">
-                  <h3>
+                  <h3 class="mb-5px">
                     {{ pond.name }}
                   </h3>
-                  <span>
+                  <!--  -->
+                  <span class="text-gray-200">
                     <i aria-hidden="true" class="iconify" data-icon="feather:map-pin"></i>
                     <span
                       >ابعاد: {{ pond.dimensions?.width }}x{{
                         pond.dimensions?.length
                       }}x{{ pond.dimensions.depth }}</span
                     >
-                    <i aria-hidden="true" class="fas fa-circle icon-separator"></i>
+                    <br/>
                     <i aria-hidden="true" class="iconify" data-icon="feather:clock"></i>
                     <span
                       >تاریخ ثبت:
                       {{ new Date(pond.createdAt).toLocaleDateString('fa') }}</span
                     >
+                  </span>
+                  <span class="text-gray-200">
+                    اکسیژن محلول در آب (Do) :
+                    <span class="text-gray-300">12</span>
+                  </span>
+                  <br />
+                  <span class="text-gray-200">
+                    میزان اسیدیته (pH) :
+                    <span class="text-gray-300">12</span>
+                  </span>
+                  <br />
+                  <span class="text-gray-200">
+                    دما (Temp) :
+                    <span class="text-gray-300">12</span>
+                  </span>
+                  <br />
+                  <span class="text-gray-200">
+                    میانگین سایز (Size Avg) :
+                    <span class="text-gray-300">23</span>
+                  </span>
+                  <br />
+                  <span class="text-gray-200">
+                    حجم توده زنده (BioMass) :
+                    <span class="text-gray-300">56</span>
+                  </span>
+                  <br />
+                  <span class="text-gray-200">
+                    میزان شوری (SAL) :
+                    <span class="text-gray-300">45</span>
                   </span>
                 </div>
                 <div class="meta-right">
@@ -112,7 +142,16 @@ let filteredPonds = computed<IPond[]>(() => {
 
 <style lang="scss">
 @import '../../scss/abstracts/mixins';
-
+.mb-5px {
+  margin-bottom: 5px;
+}
+.text-gray-200 {
+  color: rgb(114, 114, 143) !important;
+}
+.text-gray-300 {
+  color: rgb(94, 94, 129) !important;
+  font-weight: 600;
+}
 .list-view-v3 {
   .list-view-item {
     @include vuero-r-card;
@@ -122,7 +161,7 @@ let filteredPonds = computed<IPond[]>(() => {
 
     .list-view-item-inner {
       display: flex;
-      align-items: center;
+      // align-items: center;
 
       > img {
         width: 100%;

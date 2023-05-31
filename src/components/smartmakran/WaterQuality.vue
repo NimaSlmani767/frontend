@@ -1,0 +1,235 @@
+<script setup lang="ts">
+import * as yup from 'yup'
+import { Field, useForm } from 'vee-validate'
+import moment from 'moment-jalaali'
+import { defineProps } from 'vue'
+import { useNotyf } from '/@src/composable/useNotyf'
+import { useWaterQualityStore } from '/@src/stores/waterQuality'
+import { IWaterQuality } from '/@src/interfaces/waterQuality.interface'
+
+const notyf = useNotyf()
+const waterQuality = useWaterQualityStore()
+const props = defineProps<{
+  show: boolean
+}>()
+
+const schema = yup.object({
+  ph: yup.number(),
+  oxygen: yup.number(),
+  orp: yup.number(),
+  ec: yup.number(),
+  ammonia: yup.number(),
+  nitrite: yup.number(),
+  temperature: yup.number(),
+  createdAt: yup.string(),
+  pond: yup.number(),
+})
+const { handleSubmit } = useForm({
+  validationSchema: schema,
+})
+
+const waterQualityHandler = handleSubmit(async (values) => {
+  const { createdAt } = values
+  const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
+  const waterQualityBody: IWaterQuality = {
+    ph: values.ph,
+    oxygen: values.oxygen,
+    orp: values.orp,
+    ec: values.ec,
+    ammonia: values.ammonia,
+    nitrite: values.nitrite,
+    temperature: values.temperature,
+    createdAt: time,
+    pond: values.pond,
+  }
+  const result = await waterQuality.waterQualityHandler(waterQualityBody)
+  console.log(result)
+  if (result === 201) {
+    console.log(result)
+    console.log('Farm created successfully')
+    // farmStore.getFarmsList()
+  } else {
+    console.log(result)
+    console.log('Farm creation failed')
+    notyf.error({
+      message: 'کیفیت آب ثبت نشد دوباره سعی کنید',
+      duration: 2000,
+    })
+  }
+})
+</script>
+
+<template>
+  <VModal :open="show" @close="show = false" title="کیفیت آب">
+    <template #content>
+      <form class="form-fields">
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="ph">
+            <VField>
+              <label>میزان اسیدیته (pH)</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="oxygen">
+            <VField>
+              <label>اکسیژن</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="orp">
+            <VField>
+              <label>orp</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="ammonia">
+            <VField>
+              <label>ammonia</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="nitrite">
+            <VField>
+              <label>nitrite</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="temperature">
+            <VField>
+              <label>temperature</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field">
+          <Field v-slot="{ field, errorMessage }" name="pond">
+            <VField>
+              <label>pond</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field">
+          <Field v-slot="{ field, errorMessage }" name="createdAt">
+            <VField>
+              <label>تاریخ</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <custom-date-picker
+                  v-bind="field"
+                  type="datetime"
+                  compact-time
+                ></custom-date-picker>
+              </VControl>
+              <p v-if="errorMessage" class="help is-danger">
+                {{ errorMessage }}
+              </p>
+            </VField>
+          </Field>
+        </div>
+      </form>
+    </template>
+    <template #action>
+      <VButton color="primary" @click="waterQualityHandler" raised>ثبت</VButton>
+    </template>
+  </VModal>
+</template>
+<style lang="scss">
+.form-fields {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.form-fields-field {
+  width: 49%;
+}
+.mb-20px {
+  margin-bottom: 20px;
+}
+</style>
