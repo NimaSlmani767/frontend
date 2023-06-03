@@ -4,8 +4,10 @@ import { computed } from 'vue'
 import { useFarmStore } from '/@src/stores/farm'
 import { onMounted } from 'vue'
 import { IFarm } from '/@src/interfaces/farm.interface'
+import { ref } from 'vue'
 
 const farmStore = useFarmStore()
+const showCreateFarm = ref(false)
 
 onMounted(async () => {
   await farmStore.getFarmsList()
@@ -14,28 +16,34 @@ onMounted(async () => {
 let filteredFarms = computed<IFarm[]>(() => {
   return farmStore.list
 })
+let closing = () => (showCreateFarm.value = false)
 </script>
 
 <template>
   <!--Grid item-->
-  <div class="column is-6">
+  <div class="column">
+    <CreateFarmForm :show="showCreateFarm" :closeForm="closing" />
+
     <div class="dashboard-title">
       <div class="left">
         <h2 class="dark-inverted">مزرعه‌ها</h2>
         <p class="h-hidden-mobile">جزئیاتی از مزرعه‌های شما</p>
       </div>
       <div class="right">
-        <div class="field">
-          <div class="control has-icon">
+        <div class="field items-center">
+          <div class="control has-icon mb-15px">
             <input
               type="text"
-              class="input is-rounded"
+              class="input is-rounded search-input"
               placeholder="جستجوی مزرعه‌ها..."
             />
             <div class="form-icon">
               <i aria-hidden="true" class="iconify" data-icon="feather:search"></i>
             </div>
           </div>
+          <VButton raised color="primary" @click="showCreateFarm = true">
+            ثبت مزرعه جدید
+          </VButton>
         </div>
       </div>
     </div>
@@ -115,6 +123,15 @@ let filteredFarms = computed<IFarm[]>(() => {
 <style lang="scss">
 @import '../../scss/abstracts/mixins';
 
+// .search-add-box {
+//   display: flex;
+//   background: red;
+//   width: fit-content;
+// }
+
+.search-input {
+  padding-right: 30px !important;
+}
 .list-view-v3 {
   .list-view-item {
     @include vuero-r-card;
@@ -243,7 +260,16 @@ let filteredFarms = computed<IFarm[]>(() => {
     }
   }
 }
-
+.items-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.mb-15px {
+  margin-bottom: 15px;
+}
+@media only screen and (min-width: 600px) {
+}
 @media only screen and (max-width: 767px) {
   .list-view-v3 {
     .list-view-item {
@@ -320,6 +346,17 @@ let filteredFarms = computed<IFarm[]>(() => {
         }
       }
     }
+  }
+}
+@media screen and (min-width: 767px) {
+  .items-center {
+    // display: flex;
+    // align-items: center;
+    flex-direction: row;
+  }
+  .mb-15px {
+    margin-bottom: 0;
+    margin-left: 15px;
   }
 }
 </style>

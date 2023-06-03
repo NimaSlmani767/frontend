@@ -42,7 +42,7 @@ onMounted(async () => {
       <!--Tile Grid v1-->
       <div class="columns is-multiline tile-grid tile-grid-v2">
         <PondList />
-        <CreatePondForm />
+        <!-- <CreatePondForm /> -->
       </div>
     </div>
   </div>

@@ -5,7 +5,6 @@
       <!--Tile Grid v1-->
       <div class="columns is-multiline tile-grid tile-grid-v2">
         <FarmList />
-        <CreateFarmForm />
       </div>
     </div>
   </div>

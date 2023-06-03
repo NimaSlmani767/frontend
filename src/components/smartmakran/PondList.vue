@@ -2,34 +2,41 @@
 import { computed } from 'vue'
 import { IPond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
+import { ref } from 'vue'
 
 const farmStore = useFarmStore()
+const showCreatePond = ref(false)
 
 let filteredPonds = computed<IPond[]>(() => {
   return farmStore.currentFarm.ponds || []
 })
+let closing = () => (showCreatePond.value = false)
 </script>
 
 <template>
   <!--Grid item-->
-  <div class="column is-6">
+  <CreatePondForm :show="showCreatePond" :closeForm="closing" />
+  <div class="column">
     <div class="dashboard-title">
       <div class="left">
         <h2 class="dark-inverted">حوضچه‌ها</h2>
         <p class="h-hidden-mobile">جزئیاتی از حوضچه‌ها شما</p>
       </div>
       <div class="right">
-        <div class="field">
-          <div class="control has-icon">
+        <div class="field items-center">
+          <div class="control has-icon mb-15px">
             <input
               type="text"
-              class="input is-rounded"
+              class="input is-rounded search-input"
               placeholder="جستجوی حوضچه‌ها..."
             />
             <div class="form-icon">
               <i aria-hidden="true" class="iconify" data-icon="feather:search"></i>
             </div>
           </div>
+          <VButton raised color="primary" @click="showCreatePond = true">
+            ثبت مزرعه جدید
+          </VButton>
         </div>
       </div>
     </div>
@@ -79,7 +86,7 @@ let filteredPonds = computed<IPond[]>(() => {
                         pond.dimensions?.length
                       }}x{{ pond.dimensions.depth }}</span
                     >
-                    <br/>
+                    <br />
                     <i aria-hidden="true" class="iconify" data-icon="feather:clock"></i>
                     <span
                       >تاریخ ثبت:
@@ -142,6 +149,9 @@ let filteredPonds = computed<IPond[]>(() => {
 
 <style lang="scss">
 @import '../../scss/abstracts/mixins';
+.search-input {
+  padding-right: 30px !important;
+}
 .mb-5px {
   margin-bottom: 5px;
 }
@@ -280,7 +290,14 @@ let filteredPonds = computed<IPond[]>(() => {
     }
   }
 }
-
+.items-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.mb-15px {
+  margin-bottom: 15px;
+}
 @media only screen and (max-width: 767px) {
   .list-view-v3 {
     .list-view-item {
@@ -357,6 +374,15 @@ let filteredPonds = computed<IPond[]>(() => {
         }
       }
     }
+  }
+}
+@media screen and (min-width: 767px) {
+  .items-center {
+    flex-direction: row;
+  }
+  .mb-15px {
+    margin-bottom: 0;
+    margin-left: 15px;
   }
 }
 </style>

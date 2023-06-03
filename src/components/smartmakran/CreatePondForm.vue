@@ -6,11 +6,15 @@ import { ICreatePond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { usePondStore } from '/@src/stores/pond'
 import { useNotyf } from '/@src/composable/useNotyf'
+import { defineProps } from 'vue'
 
 const notyf = useNotyf()
 const farmStore = useFarmStore()
 const pondStore = usePondStore()
-
+const props = defineProps<{
+  show: boolean
+  closeForm: any
+}>()
 const schema = yup.object({
   name: yup.string().required('عنوان حوضچه الزامی است'),
   width: yup.number().required('عرض حوضچه الزامی است'),
@@ -57,186 +61,175 @@ const createPondForm = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <div class="column is-6">
-    <form class="form-layout">
-      <div class="form-outer">
-        <div class="form-header">
-          <div class="form-header-inner">
-            <div class="left">
-              <h3>ثبت حوضچه جدید</h3>
-            </div>
-            <div class="right">
-              <div class="buttons">
-                <VButton color="primary" @click="createPondForm" raised>ثبت</VButton>
-              </div>
-            </div>
+  <VModal :open="show" @close="closeForm" title="ثبت حوضچه جدید">
+    <template #content>
+      <form class="form-layout">
+        <!--Fieldset-->
+        <div class="form-fieldset">
+          <div class="fieldset-heading">
+            <h4>اطلاعات کلی</h4>
+            <p>این اطلاعات کلی حوضچه است</p>
           </div>
-        </div>
-        <div class="form-body">
-          <!--Fieldset-->
-          <div class="form-fieldset">
-            <div class="fieldset-heading">
-              <h4>اطلاعات کلی</h4>
-              <p>این اطلاعات کلی حوضچه است</p>
-            </div>
 
-            <div class="columns is-multiline">
-              <div class="column is-12">
-                <Field v-slot="{ field, errorMessage }" name="name">
-                  <VField>
-                    <label>عنوان حوضچه</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="given-name"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
-            </div>
-          </div>
-          <!--Fieldset-->
-          <div class="form-fieldset">
-            <div class="fieldset-heading">
-              <h4>ابعاد</h4>
-              <p>ابعاد کامل حوضچه را اینجا وارد کنید</p>
-            </div>
-
-            <div class="columns is-multiline">
-              <div class="column is-3">
-                <Field v-slot="{ field, errorMessage }" name="width">
-                  <VField>
-                    <label>عرض</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="organization"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
-              <div class="column is-3">
-                <Field v-slot="{ field, errorMessage }" name="length">
-                  <VField>
-                    <label>طول</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="organization"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
-              <div class="column is-3">
-                <Field v-slot="{ field, errorMessage }" name="depth">
-                  <VField>
-                    <label>عمق</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="organization"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
-              <div class="column is-3">
-                <Field v-slot="{ field, errorMessage }" name="waterHeight">
-                  <VField>
-                    <label>ارتفاع سطح آب</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="organization"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
-            </div>
-          </div>
-          <!--Fieldset-->
-          <div class="form-fieldset">
-            <div class="fieldset-heading">
-              <h4>اطلاعات اضافه</h4>
-            </div>
-
-            <div class="columns is-multiline">
-              <div class="column is-6">
-                <Field v-slot="{ field, errorMessage }" name="startFarmingDate">
-                  <VField>
-                    <label>تاریخ شروع کشت</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <custom-date-picker
-                        v-bind="field"
-                        type="datetime"
-                        compact-time
-                      ></custom-date-picker>
-                    </VControl>
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <Field v-slot="{ field, errorMessage }" name="name">
+                <VField>
+                  <label>عنوان حوضچه</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="given-name"
+                    />
                     <p v-if="errorMessage" class="help is-danger">
                       {{ errorMessage }}
                     </p>
-                  </VField>
-                </Field>
-              </div>
-              <div class="column is-6">
-                <Field v-slot="{ field, errorMessage }" name="larvaCount">
-                  <VField>
-                    <label>تعداد لاروها</label>
-                    <VControl :has-error="Boolean(errorMessage)">
-                      <input
-                        v-bind="field"
-                        type="text"
-                        class="input"
-                        placeholder=""
-                        autocomplete="organization"
-                      />
-                      <p v-if="errorMessage" class="help is-danger">
-                        {{ errorMessage }}
-                      </p>
-                    </VControl>
-                  </VField>
-                </Field>
-              </div>
+                  </VControl>
+                </VField>
+              </Field>
             </div>
           </div>
         </div>
-      </div>
-    </form>
-  </div>
+        <!--Fieldset-->
+        <div class="form-fieldset">
+          <div class="fieldset-heading">
+            <h4>ابعاد</h4>
+            <p>ابعاد کامل حوضچه را اینجا وارد کنید</p>
+          </div>
+
+          <div class="columns is-multiline">
+            <div class="column is-3">
+              <Field v-slot="{ field, errorMessage }" name="width">
+                <VField>
+                  <label>عرض</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="organization"
+                    />
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+            <div class="column is-3">
+              <Field v-slot="{ field, errorMessage }" name="length">
+                <VField>
+                  <label>طول</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="organization"
+                    />
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+            <div class="column is-3">
+              <Field v-slot="{ field, errorMessage }" name="depth">
+                <VField>
+                  <label>عمق</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="organization"
+                    />
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+            <div class="column is-3">
+              <Field v-slot="{ field, errorMessage }" name="waterHeight">
+                <VField>
+                  <label>ارتفاع سطح آب</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="organization"
+                    />
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+          </div>
+        </div>
+        <!--Fieldset-->
+        <div class="form-fieldset">
+          <div class="fieldset-heading">
+            <h4>اطلاعات اضافه</h4>
+          </div>
+
+          <div class="columns is-multiline">
+            <div class="column is-6">
+              <Field v-slot="{ field, errorMessage }" name="startFarmingDate">
+                <VField>
+                  <label>تاریخ شروع کشت</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <custom-date-picker
+                      v-bind="field"
+                      type="datetime"
+                      compact-time
+                    ></custom-date-picker>
+                  </VControl>
+                  <p v-if="errorMessage" class="help is-danger">
+                    {{ errorMessage }}
+                  </p>
+                </VField>
+              </Field>
+            </div>
+            <div class="column is-6">
+              <Field v-slot="{ field, errorMessage }" name="larvaCount">
+                <VField>
+                  <label>تعداد لاروها</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="organization"
+                    />
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </template>
+    <template #action>
+      <VButton color="primary" @click="createPondForm" raised>ثبت</VButton>
+    </template>
+  </VModal>
 </template>
 
 <style lang="scss">
