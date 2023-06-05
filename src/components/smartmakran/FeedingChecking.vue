@@ -32,6 +32,7 @@ const { handleSubmit } = useForm({
 
 const props = defineProps<{
   show: boolean
+  closeModal: any
 }>()
 
 const feedingCheckingForm = handleSubmit(async (values) => {
@@ -57,7 +58,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <VModal :open="show" @close="show = false" title="فرم غذادهی">
+  <VModal :open="show" @close="closeModal" title="فرم غذادهی">
     <template #content>
       <form class="form-fields">
         <div class="form-fields-field mb-20px">

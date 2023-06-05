@@ -11,6 +11,7 @@ const notyf = useNotyf()
 const waterQuality = useWaterQualityStore()
 const props = defineProps<{
   show: boolean
+  closeModal: any
 }>()
 
 const schema = yup.object({
@@ -60,7 +61,7 @@ const waterQualityHandler = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <VModal :open="show" @close="show = false" title="کیفیت آب">
+  <VModal :open="show" @close="closeModal" title="کیفیت آب">
     <template #content>
       <form class="form-fields">
         <div class="form-fields-field mb-20px">

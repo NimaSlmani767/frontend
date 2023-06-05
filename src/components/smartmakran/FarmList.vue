@@ -76,21 +76,25 @@ let closing = () => (showCreateFarm.value = false)
         <div class="list-view-inner">
           <TransitionGroup name="list-complete" tag="div">
             <!--Farm List-->
-            <div v-for="farm in filteredFarms" :key="farm.id" class="list-view-item">
+            <div
+              v-for="farm in filteredFarms"
+              :key="farm.id"
+              class="list-view-item farm-content-item"
+            >
               <div class="list-view-item-inner">
                 <VIconBox color="primary">
-                  <i aria-hidden="true" class="lnil lnil-home"></i>
+                  <i aria-hidden="true" class="fas fa-home"></i>
                 </VIconBox>
                 <div class="meta-left">
-                  <h3>
+                  <h3 class="farm-content-item-title">
                     {{ farm.name }}
                   </h3>
-                  <span>
+                  <span class="farm-content-item-info">
                     <i aria-hidden="true" class="iconify" data-icon="feather:map-pin"></i>
-                    <span>مکان: {{ farm.address?.city }}</span>
-                    <i aria-hidden="true" class="fas fa-circle icon-separator"></i>
+                    <span class="parameter">مکان: {{ farm.address?.city }}</span>
+                    <span class="margin-x"></span>
                     <i aria-hidden="true" class="iconify" data-icon="feather:clock"></i>
-                    <span
+                    <span class="parameter"
                       >تاریخ ثبت:
                       {{ new Date(farm.createdAt).toLocaleDateString('fa') }}</span
                     >
@@ -128,9 +132,26 @@ let closing = () => (showCreateFarm.value = false)
 //   background: red;
 //   width: fit-content;
 // }
-
+.farm-content-item-info {
+  display: flex;
+  align-items: center;
+}
+.farm-content-item {
+  display: flex;
+  align-items: center;
+}
 .search-input {
   padding-right: 30px !important;
+}
+.farm-content-item-title {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+.margin-x {
+  margin: 0 15px;
+  width: 1px;
+  height: 10px;
+  background: #c8d0e7;
 }
 .list-view-v3 {
   .list-view-item {
@@ -268,6 +289,9 @@ let closing = () => (showCreateFarm.value = false)
 .mb-15px {
   margin-bottom: 15px;
 }
+.parameter {
+  color: #727b97 !important;
+}
 @media only screen and (min-width: 600px) {
 }
 @media only screen and (max-width: 767px) {
@@ -348,15 +372,31 @@ let closing = () => (showCreateFarm.value = false)
     }
   }
 }
+@media screen and (min-width: 600px) {
+  .items-center {
+    flex-direction: row;
+  }
+}
 @media screen and (min-width: 767px) {
   .items-center {
     // display: flex;
     // align-items: center;
-    flex-direction: row;
+    // flex-direction: row;
   }
   .mb-15px {
     margin-bottom: 0;
     margin-left: 15px;
+  }
+}
+.buttons {
+  a {
+    display: flex;
+    justify-content: center;
+  }
+  a,
+  button,
+  .button {
+    width: 100% !important;
   }
 }
 </style>

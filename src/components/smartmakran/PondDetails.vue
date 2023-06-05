@@ -21,7 +21,9 @@ console.log(currentPond)
             <div>
               <div class="add-item-top-menu-pond">
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/do.png" alt="">
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">
                     اکسیژن محلول در آب
                     <span>(Do)</span>
@@ -29,27 +31,37 @@ console.log(currentPond)
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/ph.png" />
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">میزان اسیدیته (pH)</p>
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/temp.png" />
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">دما (Temp)</p>
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/size.png" />
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">سایز میانگین (Size Avg.)</p>
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/bio.png" />
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">حجم توده زنده (BioMass)</p>
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
                 <div class="add-item-top-menu-pond_box">
-                  <div class="add-item-top-menu-pond_box-icon"></div>
+                  <div class="add-item-top-menu-pond_box-icon">
+                    <img src="/@src/assets/smartmakran/icons/green/sal.png" />
+                  </div>
                   <p class="add-item-top-menu-pond_box-title">میزان شوری (SAL)</p>
                   <p class="add-item-top-menu-pond_box-value">20</p>
                 </div>
@@ -173,6 +185,9 @@ console.log(currentPond)
   justify-content: center;
   align-items: center;
   background: #41b98365;
+  img{
+    width: 18px;
+  }
 }
 .add-item-top-menu-pond_box-title {
   font-size: 12px;

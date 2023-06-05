@@ -35,7 +35,7 @@ let closing = () => (showCreatePond.value = false)
             </div>
           </div>
           <VButton raised color="primary" @click="showCreatePond = true">
-            ثبت مزرعه جدید
+            ثبت حوضچه جدید
           </VButton>
         </div>
       </div>
@@ -71,54 +71,92 @@ let closing = () => (showCreatePond.value = false)
             <!--Farm List-->
             <div v-for="pond in filteredPonds" :key="pond.id" class="list-view-item">
               <div class="list-view-item-inner">
-                <VIconBox color="primary">
-                  <i aria-hidden="true" class="lnil lnil-home"></i>
-                </VIconBox>
-                <div class="meta-left">
+                <div class="list-view-item-inner-name-icon">
+                  <VIconBox color="primary">
+                    <i aria-hidden="true" class="fas fa-home"></i>
+                  </VIconBox>
                   <h3 class="mb-5px">
                     {{ pond.name }}
                   </h3>
+                </div>
+                
+                <div class="meta-left">
+                  
                   <!--  -->
                   <span class="text-gray-200">
-                    <i aria-hidden="true" class="iconify" data-icon="feather:map-pin"></i>
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/map.png"
+                    />
+                    <!-- <i aria-hidden="true" class="iconify" data-icon="feather:map-pin"></i> -->
                     <span
                       >ابعاد: {{ pond.dimensions?.width }}x{{
                         pond.dimensions?.length
                       }}x{{ pond.dimensions.depth }}</span
                     >
-                    <br />
-                    <i aria-hidden="true" class="iconify" data-icon="feather:clock"></i>
+                  </span>
+                  <!-- <br /> -->
+                  <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/timer.png"
+                    />
                     <span
                       >تاریخ ثبت:
                       {{ new Date(pond.createdAt).toLocaleDateString('fa') }}</span
                     >
                   </span>
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/do.png"
+                    />
                     اکسیژن محلول در آب (Do) :
                     <span class="text-gray-300">12</span>
                   </span>
-                  <br />
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/ph.png"
+                    />
                     میزان اسیدیته (pH) :
                     <span class="text-gray-300">12</span>
                   </span>
-                  <br />
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/temp.png"
+                    />
                     دما (Temp) :
                     <span class="text-gray-300">12</span>
                   </span>
-                  <br />
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/size.png"
+                    />
                     میانگین سایز (Size Avg) :
                     <span class="text-gray-300">23</span>
                   </span>
-                  <br />
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/bio.png"
+                    />
                     حجم توده زنده (BioMass) :
                     <span class="text-gray-300">56</span>
                   </span>
-                  <br />
+                  <!-- <br /> -->
                   <span class="text-gray-200">
+                    <img
+                      class="icon-list-item"
+                      src="/@src/assets/smartmakran/icons/sal.png"
+                    />
                     میزان شوری (SAL) :
                     <span class="text-gray-300">45</span>
                   </span>
@@ -155,12 +193,20 @@ let closing = () => (showCreatePond.value = false)
 .mb-5px {
   margin-bottom: 5px;
 }
+
 .text-gray-200 {
   color: rgb(114, 114, 143) !important;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px !important;
 }
 .text-gray-300 {
   color: rgb(94, 94, 129) !important;
   font-weight: 600;
+}
+.icon-list-item {
+  width: 12px;
+  margin-left: 5px;
 }
 .list-view-v3 {
   .list-view-item {
@@ -171,6 +217,7 @@ let closing = () => (showCreatePond.value = false)
 
     .list-view-item-inner {
       display: flex;
+      align-items: start;
       // align-items: center;
 
       > img {
@@ -184,10 +231,11 @@ let closing = () => (showCreatePond.value = false)
       }
 
       .meta-left {
-        margin-left: 16px;
+        // margin-left: 16px;
+        margin-top: 10px;
         [dir='rtl'] & {
           margin-left: unset;
-          margin-right: 16px;
+          margin-right: 5px;
         }
 
         h3 {
@@ -292,11 +340,25 @@ let closing = () => (showCreatePond.value = false)
 }
 .items-center {
   display: flex;
-  align-items: center;
+  align-items: start;
   flex-direction: column;
+  margin: 10px 0;
 }
 .mb-15px {
   margin-bottom: 15px;
+}
+@media only screen and (min-width: 600px) {
+  .list-view-item-inner{
+    flex-wrap: wrap;
+  }
+  .list-view-item-inner-name-icon{
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .mb-5px{
+    margin-right: 10px;
+  }
 }
 @media only screen and (max-width: 767px) {
   .list-view-v3 {
@@ -384,5 +446,18 @@ let closing = () => (showCreatePond.value = false)
     margin-bottom: 0;
     margin-left: 15px;
   }
+}
+// new style
+.new-style-list-view-item-header {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.meta-right {
+  align-self: flex-end;
 }
 </style>

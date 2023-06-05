@@ -17,6 +17,7 @@ const farmStore = useFarmStore()
 const lossesStore = useLossesStore()
 const props = defineProps<{
   show: boolean
+  closeModal: any
 }>()
 let filteredPonds = computed<IPond[]>(() => {
   return farmStore.currentFarm.ponds || []
@@ -56,7 +57,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
 </script>
 
 <template>
-  <VModal :open="show" @close="show = false" title="ثبت تلفات">
+  <VModal :open="show" @close="closeModal" title="ثبت تلفات">
     <template #content>
       <form class="form-fields">
         <div class="form-fields-field mb-20px">

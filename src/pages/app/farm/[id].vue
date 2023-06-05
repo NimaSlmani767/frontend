@@ -21,19 +21,22 @@ const farmStore = useFarmStore()
 onMounted(async () => {
   await farmStore.getFarm(params.id)
 })
+let closeFeedingChecking = () => (showFeedingCheckingModal.value = false)
+let closeLosses = () => (showLossesModal.value = false)
+let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
 </script>
 
 <template>
   <div class="page-content-inner">
-    <!-- <FeedingChecking :show="showLossesModal" />
-    <Losses :show="showFeedingCheckingModal" />
-    <WaterQuality :show="showWaterQualityModal" /> -->
+    <FeedingChecking :show="showLossesModal" :closeModal="closeLosses" />
+    <Losses :show="showFeedingCheckingModal" :closeModal="closeFeedingChecking" />
+    <WaterQuality :show="showWaterQualityModal" :closeModal="closeWaterQualityModal" />
     <div class="nav-buttons-ponds">
-      <VButton color="light-border" @click="showLossesModal = true" raised>تلفات</VButton>
-      <VButton color="light-border" @click="showFeedingCheckingModal = true" raised
+      <VButton color="success" outlined @click="showLossesModal = true" raised>تلفات</VButton>
+      <VButton color="success" outlined @click="showFeedingCheckingModal = true" raised
         >غذادهی</VButton
       >
-      <VButton color="light-border" @click="showWaterQualityModal = true" raised
+      <VButton color="success" outlined @click="showWaterQualityModal = true" raised
         >اندازه گیری</VButton
       >
     </div>
@@ -53,7 +56,7 @@ onMounted(async () => {
   width: 100%;
   // height: 50px;
   background: white;
-  border: 1px solid rgb(228, 228, 228);
+  // border: 1px solid rgb(228, 228, 228);
   border-radius: 5px;
   margin-bottom: 15px;
   padding: 10px;
@@ -67,7 +70,7 @@ onMounted(async () => {
 @media screen and (min-width: 600px) {
   .nav-buttons-ponds {
     display: grid;
-    grid-template-columns: 32.7% 32.7% 32.7%;
+    grid-template-columns: 32.5% 32.5% 32.5%;
     justify-content: space-between;
     .button {
       margin-bottom: 0 !important;
