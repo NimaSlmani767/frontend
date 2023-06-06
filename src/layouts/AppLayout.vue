@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, watchPostEffect, watch } from 'vue'
 import { useRoute } from 'vue-router'
-
+import { useUserStore } from '/@src/stores/user'
+import { useRouter } from 'vue-router'
 import type { SidebarTheme } from '/@src/components/navigation/desktop/Sidebar.vue'
 import { useViewWrapper } from '/@src/stores/viewWrapper'
-
+const userStore = useUserStore()
+const router = useRouter()
 const props = withDefaults(
   defineProps<{
     theme?: SidebarTheme
@@ -35,7 +37,10 @@ function switchSidebar(id: string) {
     activeMobileSubsidebar.value = id
   }
 }
-
+function exit() {
+  userStore.logout()
+  router.push({ name: 'auth' })
+}
 /**
  * watchPostEffect callback will be executed each time dependent reactive values has changed
  */
@@ -86,6 +91,9 @@ watch(
         </li>
         <li>
           <RouterLink :to="{ name: 'app-pond' }"> لیست حوضچه‌ها </RouterLink>
+        </li>
+        <li>
+          <a @click="exit()"> خروج </a>
         </li>
       </template>
 

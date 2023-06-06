@@ -28,13 +28,19 @@ let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
 
 <template>
   <div class="page-content-inner">
-    <FeedingChecking :show="showLossesModal" :closeModal="closeLosses" />
-    <Losses :show="showFeedingCheckingModal" :closeModal="closeFeedingChecking" />
+    <FeedingChecking
+      :show="showFeedingCheckingModal"
+      :closeModal="closeFeedingChecking"
+      :pondBool="false"
+    />
+    <Losses :show="showLossesModal" :closeModal="closeLosses" />
     <WaterQuality :show="showWaterQualityModal" :closeModal="closeWaterQualityModal" />
     <div class="nav-buttons-ponds">
-      <VButton color="success" outlined @click="showLossesModal = true" raised>تلفات</VButton>
+      <VButton color="success" outlined @click="showLossesModal = true" raised
+        >تلفات</VButton
+      >
       <VButton color="success" outlined @click="showFeedingCheckingModal = true" raised
-        >غذادهی</VButton
+        >ثبت اطلاعات غذادهی</VButton
       >
       <VButton color="success" outlined @click="showWaterQualityModal = true" raised
         >اندازه گیری</VButton

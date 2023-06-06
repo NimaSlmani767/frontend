@@ -26,7 +26,7 @@ let filteredPonds = computed<IPond[]>(() => {
 const schema = yup.object({
   amountLosses: yup.number().required('تعداد تلفات الزامی است'),
   createdAt: yup.string().required('وارد کردن تاریخ الزامی است'),
-  pondLosses: yup.number().required('وارد کردن استخر الزامی است'),
+  pondLosses: yup.string().required('وارد کردن استخر الزامی است'),
 })
 const { handleSubmit } = useForm({
   validationSchema: schema,
@@ -36,7 +36,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
   const { amountLosses, createdAt, pondLosses } = values
   const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
   const lossesBody: ILosses = {
-    amount: amountLosses,
+    amount: Math.floor(amountLosses),
     pond: pondLosses,
     createdAt: time,
   }
@@ -59,44 +59,46 @@ const feedingCheckingForm = handleSubmit(async (values) => {
 <template>
   <VModal :open="show" @close="closeModal" title="ثبت تلفات">
     <template #content>
-      <form class="form-fields">
-        <div class="form-fields-field mb-20px">
-          <Field v-slot="{ field, errorMessage }" name="amountLosses">
-            <VField>
-              <label>تعداد تلفات</label>
-              <VControl :has-error="Boolean(errorMessage)">
-                <input
-                  v-bind="field"
-                  type="text"
-                  class="input"
-                  placeholder=""
-                  autocomplete="given-name"
-                />
-                <p v-if="errorMessage" class="help is-danger">
-                  {{ errorMessage }}
-                </p>
-              </VControl>
-            </VField>
-          </Field>
+      <form>
+        <div class="form-fields">
+          <div class="form-fields-field mb-20px">
+            <Field v-slot="{ field, errorMessage }" name="pondLosses">
+              <VField>
+                <label>استخر</label>
+                <VControl :has-error="Boolean(errorMessage)">
+                  <select v-bind="field">
+                    <option v-for="pond in filteredPonds" :key="pond.id" :value="pond.id">
+                      {{ pond.name }}
+                    </option>
+                  </select>
+                  <p v-if="errorMessage" class="help is-danger">
+                    {{ errorMessage }}
+                  </p>
+                </VControl>
+              </VField>
+            </Field>
+          </div>
+          <div class="form-fields-field mb-20px">
+            <Field v-slot="{ field, errorMessage }" name="amountLosses">
+              <VField>
+                <label>تعداد تلفات</label>
+                <VControl :has-error="Boolean(errorMessage)">
+                  <input
+                    v-bind="field"
+                    type="text"
+                    class="input"
+                    placeholder=""
+                    autocomplete="given-name"
+                  />
+                  <p v-if="errorMessage" class="help is-danger">
+                    {{ errorMessage }}
+                  </p>
+                </VControl>
+              </VField>
+            </Field>
+          </div>
         </div>
-        <div class="form-fields-field mb-20px">
-          <Field v-slot="{ field, errorMessage }" name="pondLosses">
-            <VField>
-              <label>استخر</label>
-              <VControl :has-error="Boolean(errorMessage)">
-                <select v-bind="field">
-                  <option v-for="pond in filteredPonds" :key="pond.id" :value="pond.id">
-                    {{ pond.name }}
-                  </option>
-                </select>
-                <p v-if="errorMessage" class="help is-danger">
-                  {{ errorMessage }}
-                </p>
-              </VControl>
-            </VField>
-          </Field>
-        </div>
-        <div class="form-fields-field mb-20px mb-0">
+        <div class="mb-20px mb-0">
           <Field v-slot="{ field, errorMessage }" name="createdAt">
             <VField>
               <label>تاریخ</label>

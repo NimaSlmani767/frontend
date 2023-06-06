@@ -3,16 +3,21 @@ import { computed, onMounted } from 'vue'
 import { IPond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { usePondStore } from '/@src/stores/pond'
+
 import { ref } from 'vue'
 
 const farmStore = useFarmStore()
-const showCreatePond = ref(false)
 const pondStore = usePondStore()
+
+const showCreatePond = ref(false)
 
 let filteredPonds = computed<IPond[]>(() => {
   return farmStore.currentFarm.ponds || []
 })
-
+onMounted(async () => {
+  await pondStore.getPond()
+})
+console.log(filteredPonds)
 let closing = () => (showCreatePond.value = false)
 </script>
 

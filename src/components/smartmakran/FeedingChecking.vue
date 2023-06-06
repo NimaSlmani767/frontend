@@ -13,6 +13,9 @@ import { useFarmStore } from '/@src/stores/farm'
 import { IFeedingChecking } from '/@src/interfaces/feedingChecking.interface'
 import { useNotyf } from '/@src/composable/useNotyf'
 import { boolean } from 'yup/lib/locale'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
 
 const notyf = useNotyf()
 const feedingStore = useFeedingCheckingStore()
@@ -24,24 +27,24 @@ const schema = yup.object({
   amount: yup.number().required('میزان غذادهی الزامی است'),
   type: yup.string().required('نوع غذا الزامی است'),
   createdAt: yup.string().required('وارد کردن تاریخ الزامی است'),
-  pond: yup.number().required('وارد کردن استخر الزامی است'),
+  pond: yup.string(),
 })
 const { handleSubmit } = useForm({
   validationSchema: schema,
 })
-
 const props = defineProps<{
   show: boolean
   closeModal: any
+  pondBool: boolean
 }>()
-
 const feedingCheckingForm = handleSubmit(async (values) => {
   const { amount, type, createdAt, pond } = values
   const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
   const feedingBody: IFeedingChecking = {
-    amount: amount,
-    pond: pond,
+    amount: Math.floor(amount),
+    pond: pondBool === false ? pond : route.params.id,
     createdAt: time,
+    type: type,
   }
   const result = await feedingStore.feedingCheckingHandler(feedingBody)
   if (result === 201) {
@@ -61,6 +64,23 @@ const feedingCheckingForm = handleSubmit(async (values) => {
   <VModal :open="show" @close="closeModal" title="فرم غذادهی">
     <template #content>
       <form class="form-fields">
+        <div v-if="pondBool === false" class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="pond">
+            <VField>
+              <label>استخر</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <select v-bind="field">
+                  <option v-for="pond in filteredPonds" :key="pond.id" :value="pond.id">
+                    {{ pond.name }}
+                  </option>
+                </select>
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
         <div class="form-fields-field mb-20px">
           <Field v-slot="{ field, errorMessage }" name="amount">
             <VField>
@@ -80,16 +100,19 @@ const feedingCheckingForm = handleSubmit(async (values) => {
             </VField>
           </Field>
         </div>
-        <div class="form-fields-field mb-20px">
-          <Field v-slot="{ field, errorMessage }" name="pond">
+
+        <div class="form-fields-field mb-20px mb-0">
+          <Field v-slot="{ field, errorMessage }" name="type">
             <VField>
-              <label>استخر</label>
+              <label>نوع غذا</label>
               <VControl :has-error="Boolean(errorMessage)">
-                <select v-bind="field">
-                  <option value="1">استخر 1</option>
-                  <option value="2">استخر 2</option>
-                  <option value="3">استخر 3</option>
-                </select>
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
                 <p v-if="errorMessage" class="help is-danger">
                   {{ errorMessage }}
                 </p>
@@ -111,25 +134,6 @@ const feedingCheckingForm = handleSubmit(async (values) => {
               <p v-if="errorMessage" class="help is-danger">
                 {{ errorMessage }}
               </p>
-            </VField>
-          </Field>
-        </div>
-        <div class="form-fields-field mb-20px mb-0">
-          <Field v-slot="{ field, errorMessage }" name="type">
-            <VField>
-              <label>نوع غذا</label>
-              <VControl :has-error="Boolean(errorMessage)">
-                <input
-                  v-bind="field"
-                  type="text"
-                  class="input"
-                  placeholder=""
-                  autocomplete="given-name"
-                />
-                <p v-if="errorMessage" class="help is-danger">
-                  {{ errorMessage }}
-                </p>
-              </VControl>
             </VField>
           </Field>
         </div>

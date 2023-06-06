@@ -4,9 +4,10 @@
     <div class="business-dashboard course-dashboard">
       <!--Tile Grid v1-->
       <div class="columns is-multiline tile-grid tile-grid-v2">
-        <!-- <PondDetails /> -->
-        <FarmList />
-        <CreateFarmForm />
+        <Ponds />
+        <!-- <PondList /> -->
+        <!-- <FarmList />
+        <CreateFarmForm /> -->
       </div>
     </div>
   </div>

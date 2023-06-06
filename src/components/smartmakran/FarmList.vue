@@ -79,7 +79,7 @@ let closing = () => (showCreateFarm.value = false)
             <div
               v-for="farm in filteredFarms"
               :key="farm.id"
-              class="list-view-item farm-content-item"
+              class="list-view-item farm-list farm-content-item"
             >
               <div class="list-view-item-inner">
                 <VIconBox color="primary">
@@ -132,6 +132,7 @@ let closing = () => (showCreateFarm.value = false)
 //   background: red;
 //   width: fit-content;
 // }
+
 .farm-content-item-info {
   display: flex;
   align-items: center;
@@ -145,7 +146,7 @@ let closing = () => (showCreateFarm.value = false)
 }
 .farm-content-item-title {
   margin-bottom: 5px;
-  margin-top: 10px;
+  // margin-top: 10px;
 }
 .margin-x {
   margin: 0 15px;

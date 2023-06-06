@@ -8,4 +8,5 @@ export interface IWaterQuality {
   ammonia: any
   nitrite: any
   temperature: any
+  sensorsKey: any
 }

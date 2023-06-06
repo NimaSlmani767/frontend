@@ -6,8 +6,11 @@ import { defineProps } from 'vue'
 import { useNotyf } from '/@src/composable/useNotyf'
 import { useWaterQualityStore } from '/@src/stores/waterQuality'
 import { IWaterQuality } from '/@src/interfaces/waterQuality.interface'
-
+import { IPond } from '/@src/interfaces/pond.interface'
+import { useFarmStore } from '/@src/stores/farm'
+import { computed } from 'vue'
 const notyf = useNotyf()
+const farmStore = useFarmStore()
 const waterQuality = useWaterQualityStore()
 const props = defineProps<{
   show: boolean
@@ -23,7 +26,7 @@ const schema = yup.object({
   nitrite: yup.number(),
   temperature: yup.number(),
   createdAt: yup.string(),
-  pond: yup.number(),
+  pond: yup.string(),
 })
 const { handleSubmit } = useForm({
   validationSchema: schema,
@@ -33,16 +36,18 @@ const waterQualityHandler = handleSubmit(async (values) => {
   const { createdAt } = values
   const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
   const waterQualityBody: IWaterQuality = {
-    ph: values.ph,
-    oxygen: values.oxygen,
-    orp: values.orp,
-    ec: values.ec,
-    ammonia: values.ammonia,
-    nitrite: values.nitrite,
-    temperature: values.temperature,
+    ph: Math.floor(values.ph),
+    oxygen: Math.floor(values.oxygen),
+    orp: Math.floor(values.orp),
+    ec: Math.floor(values.ec),
+    ammonia: Math.floor(values.ammonia),
+    nitrite: Math.floor(values.nitrite),
+    temperature: Math.floor(values.temperature),
     createdAt: time,
     pond: values.pond,
+    sensorsKey: JSON.parse(localStorage.getItem('user')).id,
   }
+
   const result = await waterQuality.waterQualityHandler(waterQualityBody)
   console.log(result)
   if (result === 201) {
@@ -58,6 +63,9 @@ const waterQualityHandler = handleSubmit(async (values) => {
     })
   }
 })
+let filteredPonds = computed<IPond[]>(() => {
+  return farmStore.currentFarm.ponds || []
+})
 </script>
 
 <template>
@@ -65,9 +73,45 @@ const waterQualityHandler = handleSubmit(async (values) => {
     <template #content>
       <form class="form-fields">
         <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="pond">
+            <VField>
+              <label>استخر</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <select v-bind="field">
+                  <option v-for="pond in filteredPonds" :key="pond.id" :value="pond.id">
+                    {{ pond.name }}
+                  </option>
+                </select>
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
           <Field v-slot="{ field, errorMessage }" name="ph">
             <VField>
               <label>میزان اسیدیته (pH)</label>
+              <VControl :has-error="Boolean(errorMessage)">
+                <input
+                  v-bind="field"
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  autocomplete="given-name"
+                />
+                <p v-if="errorMessage" class="help is-danger">
+                  {{ errorMessage }}
+                </p>
+              </VControl>
+            </VField>
+          </Field>
+        </div>
+        <div class="form-fields-field mb-20px">
+          <Field v-slot="{ field, errorMessage }" name="ec">
+            <VField>
+              <label>شوری آب</label>
               <VControl :has-error="Boolean(errorMessage)">
                 <input
                   v-bind="field"
@@ -178,7 +222,7 @@ const waterQualityHandler = handleSubmit(async (values) => {
             </VField>
           </Field>
         </div>
-        <div class="form-fields-field mb-20px mb-0">
+        <!-- <div class="form-fields-field mb-20px mb-0">
           <Field v-slot="{ field, errorMessage }" name="pond">
             <VField>
               <label>pond</label>
@@ -196,7 +240,7 @@ const waterQualityHandler = handleSubmit(async (values) => {
               </VControl>
             </VField>
           </Field>
-        </div>
+        </div> -->
         <div class="form-fields-field mb-20px mb-0">
           <Field v-slot="{ field, errorMessage }" name="createdAt">
             <VField>

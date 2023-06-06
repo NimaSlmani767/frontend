@@ -64,11 +64,6 @@ const createFarmForm = handleSubmit(async (values) => {
       <div class="">
         <form>
           <div>
-            <div class="fieldset-heading">
-              <h4>اطلاعات کلی</h4>
-              <p>این اطلاعات کلی مزرعه است</p>
-            </div>
-
             <div class="columns is-multiline">
               <div class="column is-6">
                 <Field v-slot="{ field, errorMessage }" name="name">
