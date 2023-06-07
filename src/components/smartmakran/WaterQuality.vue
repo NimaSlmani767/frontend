@@ -9,12 +9,16 @@ import { IWaterQuality } from '/@src/interfaces/waterQuality.interface'
 import { IPond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+
 const notyf = useNotyf()
 const farmStore = useFarmStore()
 const waterQuality = useWaterQualityStore()
+const route = useRoute()
 const props = defineProps<{
   show: boolean
   closeModal: any
+  showPondField: boolean
 }>()
 
 const schema = yup.object({
@@ -44,7 +48,7 @@ const waterQualityHandler = handleSubmit(async (values) => {
     nitrite: Math.floor(values.nitrite),
     temperature: Math.floor(values.temperature),
     createdAt: time,
-    pond: values.pond,
+    pond: props.showPondField === false ? values.pond : route.params.id,
     sensorsKey: JSON.parse(localStorage.getItem('user')).id,
   }
 
@@ -72,7 +76,7 @@ let filteredPonds = computed<IPond[]>(() => {
   <VModal :open="show" @close="closeModal" title="کیفیت آب">
     <template #content>
       <form class="form-fields">
-        <div class="form-fields-field mb-20px">
+        <div v-if="!showPondField" class="form-fields-field mb-20px">
           <Field v-slot="{ field, errorMessage }" name="pond">
             <VField>
               <label>استخر</label>
