@@ -11,13 +11,16 @@ import { IPond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { useLossesStore } from '/@src/stores/losses'
 import { useNotyf } from '/@src/composable/useNotyf'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const notyf = useNotyf()
 const farmStore = useFarmStore()
 const lossesStore = useLossesStore()
 const props = defineProps<{
   show: boolean
   closeModal: any
+  showPondField: boolean
 }>()
 let filteredPonds = computed<IPond[]>(() => {
   return farmStore.currentFarm.ponds || []
@@ -26,7 +29,7 @@ let filteredPonds = computed<IPond[]>(() => {
 const schema = yup.object({
   amountLosses: yup.number().required('تعداد تلفات الزامی است'),
   createdAt: yup.string().required('وارد کردن تاریخ الزامی است'),
-  pondLosses: yup.string().required('وارد کردن استخر الزامی است'),
+  pondLosses: yup.string(),
 })
 const { handleSubmit } = useForm({
   validationSchema: schema,
@@ -37,7 +40,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
   const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
   const lossesBody: ILosses = {
     amount: Math.floor(amountLosses),
-    pond: pondLosses,
+    pond: props.showPondField === false ? pondLosses : route.params.id,
     createdAt: time,
   }
   const result = await lossesStore.lossesHandler(lossesBody)
@@ -61,7 +64,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
     <template #content>
       <form>
         <div class="form-fields">
-          <div class="form-fields-field mb-20px">
+          <div v-if="!showPondField" class="form-fields-field mb-20px">
             <Field v-slot="{ field, errorMessage }" name="pondLosses">
               <VField>
                 <label>استخر</label>
