@@ -24,10 +24,14 @@ let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
     <FeedingChecking
       :show="showFeedingCheckingModal"
       :closeModal="closeFeedingChecking"
-      :pondBool="true"
+      :showPondField="true"
     />
-    <Losses :show="showLossesModal" :closeModal="closeLosses" />
-    <WaterQuality :show="showWaterQualityModal" :closeModal="closeWaterQualityModal" />
+    <Losses :show="showLossesModal" :closeModal="closeLosses" :showPondField="true" />
+    <WaterQuality
+      :show="showWaterQualityModal"
+      :closeModal="closeWaterQualityModal"
+      :showPondField="true"
+    />
     <div class="nav-buttons-ponds">
       <VButton color="success" outlined @click="showLossesModal = true" raised
         >تلفات</VButton

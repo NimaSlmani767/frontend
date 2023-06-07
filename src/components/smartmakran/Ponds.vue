@@ -15,15 +15,18 @@ let filteredPonds = computed<IPond[]>(() => {
   return farmStore.currentFarm.ponds || []
 })
 onMounted(async () => {
-  await pondStore.getPond()
+  await pondStore.getPoolsList()
 })
-console.log(filteredPonds)
+onMounted(() => {
+  console.log(pondStore.currentPond)
+})
+const ponds = JSON.parse(localStorage.getItem('poolList'))
 let closing = () => (showCreatePond.value = false)
 </script>
 
 <template>
   <!--Grid item-->
-  <CreatePondForm :show="showCreatePond" :closeForm="closing" />
+  <CreatePondForm :show-field-farm="true" :show="showCreatePond" :closeForm="closing" />
   <div class="column">
     <div class="dashboard-title">
       <div class="left">
@@ -53,7 +56,7 @@ let closing = () => (showCreatePond.value = false)
     <div class="list-view list-view-v3">
       <!--List Empty Search Placeholder -->
       <VPlaceholderPage
-        :class="[filteredPonds.length !== 0 && 'is-hidden']"
+        :class="[ponds.length !== 0 && 'is-hidden']"
         title="ما هیچ نتیجه مطابقی پیدا نکردیم."
         subtitle="خیلی بد. به نظر می رسد هیچ نتیجه مطابقی برای عبارات جستجویی که وارد کرده اید پیدا نکردیم. لطفاً عبارتها یا معیارهای جستجوی مختلف را امتحان کنید."
         larger
@@ -80,7 +83,7 @@ let closing = () => (showCreatePond.value = false)
 
             <!-- remove card start -->
             <!-- remove card end -->
-            <div v-for="pond in filteredPonds" :key="pond.id" class="card-pond">
+            <div v-for="pond in ponds" :key="pond._id" class="card-pond">
               <div class="card-pond-header">
                 <div>
                   <VIconBox color="primary">
@@ -102,7 +105,7 @@ let closing = () => (showCreatePond.value = false)
                   </div>
                 </div>
                 <div class="card-pond-header-detail">
-                  <RouterLink :to="{ name: 'app-pond-id', params: { id: pond.id } }">
+                  <RouterLink :to="{ name: 'app-pond-id', params: { id: pond._id } }">
                     <VButton color="primary" outlined raised> جزئیات </VButton>
                   </RouterLink>
                 </div>
@@ -165,7 +168,7 @@ let closing = () => (showCreatePond.value = false)
                 </div>
               </div>
               <div class="card-pond-footer">
-                <RouterLink :to="{ name: 'app-pond-id', params: { id: pond.id } }">
+                <RouterLink :to="{ name: 'app-pond-id', params: { id: pond._id } }">
                   <VButton color="primary" outlined raised> جزئیات </VButton>
                 </RouterLink>
               </div>

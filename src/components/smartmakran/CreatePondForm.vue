@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import * as yup from 'yup'
 import { Field, useForm } from 'vee-validate'
+import { computed } from 'vue'
 import moment from 'moment-jalaali'
 import { ICreatePond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { usePondStore } from '/@src/stores/pond'
 import { useNotyf } from '/@src/composable/useNotyf'
 import { defineProps } from 'vue'
-
+import { IFarm } from '/@src/interfaces/farm.interface'
+import { onMounted } from 'vue'
 const notyf = useNotyf()
 const farmStore = useFarmStore()
 const pondStore = usePondStore()
 const props = defineProps<{
   show: boolean
   closeForm: any
+  showFieldFarm: boolean
 }>()
+onMounted(async () => {
+  await farmStore.getFarmsList()
+})
 const schema = yup.object({
   name: yup.string().required('عنوان حوضچه الزامی است'),
   width: yup.number().required('عرض حوضچه الزامی است'),
@@ -23,18 +29,22 @@ const schema = yup.object({
   waterHeight: yup.number().required('ارتفاع سطح آب حوضچه الزامی است'),
   startFarmingDate: yup.date().required('تاریخ شروع کشت الزامی است'),
   larvaCount: yup.number().required('تعداد لاروا الزامی است'),
+  farm: yup.string(),
 })
 
 const { handleSubmit } = useForm({
   validationSchema: schema,
 })
-
+let filteredFarms = computed<IFarm[]>(() => {
+  return farmStore.list
+})
 const createPondForm = handleSubmit(async (values) => {
-  const { name, width, length, depth, waterHeight, startFarmingDate, larvaCount } = values
+  const { name, width, length, depth, waterHeight, startFarmingDate, farm, larvaCount } =
+    values
   const startFarming = moment.utc(startFarmingDate).format('YYYY-MM-DD HH:mm:ss')
 
   const pond: ICreatePond = {
-    farm: farmStore.currentFarm.id,
+    farm: props.showFieldFarm ? farm : farmStore.currentFarm.id,
     name: name as string,
     dimensions: {
       width: Number(width),
@@ -49,7 +59,7 @@ const createPondForm = handleSubmit(async (values) => {
   const result = await pondStore.createPond(pond)
   if (result === 201) {
     console.log('Farm created successfully')
-    farmStore.getFarm(farmStore.currentFarm.id)
+    farmStore.getFarm(props.showFieldFarm ? pond.farm : farmStore.currentFarm.id)
   } else {
     console.log('Farm creation failed')
     notyf.error({
@@ -70,7 +80,29 @@ const createPondForm = handleSubmit(async (values) => {
             <h4>اطلاعات کلی</h4>
             <p>این اطلاعات کلی حوضچه است</p>
           </div>
-
+          <div v-if="showFieldFarm" class="columns is-multiline">
+            <div class="column is-12">
+              <Field v-slot="{ field, errorMessage }" name="farm">
+                <VField>
+                  <label>مزرعه</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <select v-bind="field">
+                      <option
+                        v-for="pond in filteredFarms"
+                        :key="pond.id"
+                        :value="pond.id"
+                      >
+                        {{ pond.name }}
+                      </option>
+                    </select>
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+          </div>
           <div class="columns is-multiline">
             <div class="column is-12">
               <Field v-slot="{ field, errorMessage }" name="name">
@@ -334,7 +366,14 @@ const createPondForm = handleSubmit(async (values) => {
     border-radius: var(--radius) !important;
   }
 }
-
+select {
+  height: 40px;
+  border: 1px solid rgb(222, 222, 222);
+  border-radius: 4px;
+  padding: 0 10px;
+  position: relative;
+  color: rgb(60, 60, 60);
+}
 @media only screen and (max-width: 767px) {
   .form-layout {
     .form-outer {
