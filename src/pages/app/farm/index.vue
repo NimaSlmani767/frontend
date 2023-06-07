@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+onMounted(() => {
+  localStorage.setItem('page-name', 'لیست مزارع')
+})
+</script>
+
 <template>
   <div class="page-content-inner">
     <!-- <TestDashboard /> -->

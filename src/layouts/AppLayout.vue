@@ -3,9 +3,17 @@ import { ref, watchPostEffect, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '/@src/stores/user'
 import { useRouter } from 'vue-router'
+
+import { usePondStore } from '../stores/pond'
+import { useFarmStore } from '../stores/farm'
+
 import type { SidebarTheme } from '/@src/components/navigation/desktop/Sidebar.vue'
 import { useViewWrapper } from '/@src/stores/viewWrapper'
 const userStore = useUserStore()
+
+const pondStore = usePondStore()
+const farmStore = useFarmStore()
+
 const router = useRouter()
 const props = withDefaults(
   defineProps<{
@@ -28,6 +36,7 @@ const route = useRoute()
 const isMobileSidebarOpen = ref(false)
 const isDesktopSidebarOpen = ref(props.openOnMounted)
 const activeMobileSubsidebar = ref(props.defaultSidebar)
+const pageTitle = ref('  ')
 
 function switchSidebar(id: string) {
   if (id === activeMobileSubsidebar.value) {
@@ -46,11 +55,51 @@ function exit() {
  */
 watchPostEffect(() => {
   viewWrapper.setPushed(isDesktopSidebarOpen.value ?? false)
+
+  console.log(pondStore.currentPond.name)
+  console.log(farmStore.currentFarm.name)
+
+  if (location.pathname === '/app/farm') {
+    pageTitle.value = 'لیست مزارع'
+  }
+  if (location.pathname === '/app/pond') {
+    pageTitle.value = 'لیست حوضچه ها'
+  }
+  if (location.pathname !== '/app/farm' && location.pathname !== '/app/pond') {
+    if (location.pathname.includes('/app/farm')) {
+      pageTitle.value = `مزرعه ${
+        farmStore.currentFarm.name ? farmStore.currentFarm.name : 'نا مشخص'
+      }`
+    }
+    if (location.pathname.includes('pond')) {
+      pageTitle.value = `حوضچه ${
+        pondStore.currentPond.name ? pondStore.currentPond.name : 'نا مشخص'
+      }`
+    }
+  }
 })
 watch(
   () => route.fullPath,
   () => {
     isMobileSidebarOpen.value = false
+    if (location.pathname === '/app/farm') {
+      pageTitle.value = 'لیست مزارع'
+    }
+    if (location.pathname === '/app/pond') {
+      pageTitle.value = 'لیست حوضچه ها'
+    }
+    if (location.pathname !== '/app/farm' && location.pathname !== '/app/pond') {
+      if (location.pathname.includes('/app/farm')) {
+        pageTitle.value = `مزرعه ${
+          farmStore.currentFarm.name ? farmStore.currentFarm.name : 'نا مشخص'
+        }`
+      }
+      if (location.pathname.includes('pond')) {
+        pageTitle.value = `حوضچه ${
+          pondStore.currentPond.name ? pondStore.currentPond.name : 'نا مشخص'
+        }`
+      }
+    }
 
     if (props.closeOnChange && isDesktopSidebarOpen.value) {
       isDesktopSidebarOpen.value = false
@@ -162,7 +211,8 @@ watch(
         <VPageContent v-else class="is-relative">
           <div class="page-title has-text-centered">
             <div class="title-wrap">
-              <h1 class="title is-4">{{ viewWrapper.pageTitle }}</h1>
+              <!-- <h1 class="title is-4">{{ viewWrapper.pageTitle }}</h1> -->
+              <h1 class="title is-4">{{ pageTitle }}</h1>
             </div>
 
             <Toolbar class="desktop-toolbar" />

@@ -21,6 +21,10 @@ const farmStore = useFarmStore()
 onMounted(async () => {
   await farmStore.getFarm(params.id)
 })
+onMounted(() => {
+  localStorage.setItem('page-name', `مزرعه ${farmStore.currentFarm.name}`)
+})
+
 let closeFeedingChecking = () => (showFeedingCheckingModal.value = false)
 let closeLosses = () => (showLossesModal.value = false)
 let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
@@ -31,10 +35,14 @@ let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
     <FeedingChecking
       :show="showFeedingCheckingModal"
       :closeModal="closeFeedingChecking"
-      :pondBool="false"
+      :showPondField="false"
     />
-    <Losses :show="showLossesModal" :closeModal="closeLosses" />
-    <WaterQuality :show="showWaterQualityModal" :closeModal="closeWaterQualityModal" />
+    <Losses :show="showLossesModal" :closeModal="closeLosses" :showPondField="false" />
+    <WaterQuality
+      :show="showWaterQualityModal"
+      :closeModal="closeWaterQualityModal"
+      :showPondField="false"
+    />
     <div class="nav-buttons-ponds">
       <VButton color="success" outlined @click="showLossesModal = true" raised
         >تلفات</VButton
