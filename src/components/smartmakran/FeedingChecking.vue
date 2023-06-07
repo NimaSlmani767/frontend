@@ -12,7 +12,6 @@ import { IPond } from '/@src/interfaces/pond.interface'
 import { useFarmStore } from '/@src/stores/farm'
 import { IFeedingChecking } from '/@src/interfaces/feedingChecking.interface'
 import { useNotyf } from '/@src/composable/useNotyf'
-import { boolean } from 'yup/lib/locale'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
@@ -35,14 +34,14 @@ const { handleSubmit } = useForm({
 const props = defineProps<{
   show: boolean
   closeModal: any
-  pondBool: boolean
+  showPondField: boolean
 }>()
 const feedingCheckingForm = handleSubmit(async (values) => {
   const { amount, type, createdAt, pond } = values
   const time = moment.utc(createdAt).format('YYYY-MM-DD HH:mm:ss')
   const feedingBody: IFeedingChecking = {
     amount: Math.floor(amount),
-    pond: pondBool === false ? pond : route.params.id,
+    pond: props.showPondField === false ? pond : route.params.id,
     createdAt: time,
     type: type,
   }
@@ -64,7 +63,7 @@ const feedingCheckingForm = handleSubmit(async (values) => {
   <VModal :open="show" @close="closeModal" title="فرم غذادهی">
     <template #content>
       <form class="form-fields">
-        <div v-if="pondBool === false" class="form-fields-field mb-20px">
+        <div v-if="!showPondField" class="form-fields-field mb-20px">
           <Field v-slot="{ field, errorMessage }" name="pond">
             <VField>
               <label>استخر</label>
