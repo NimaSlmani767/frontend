@@ -19,16 +19,6 @@ let filteredFarms = computed<IFarm[]>(() => {
 })
 watchEffect(async () => {
   await pondStore.getPoolsList()
-  try {
-    let res = await axios.get(`https://api.smartmakran.ir/sensor`, {
-      headers: {
-        Authorization: localStorage.getItem('token'),
-      },
-    })
-    console.log(res)
-  } catch (err) {
-    console.log(err)
-  }
 })
 let closing = () => (showCreateFarm.value = false)
 </script>
