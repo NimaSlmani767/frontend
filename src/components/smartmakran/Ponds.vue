@@ -46,6 +46,21 @@ let closing = () => (showCreatePond.value = false)
             ثبت حوضچه جدید
           </VButton>
         </div>
+        <!-- <div class="field items-center">
+          <div class="control has-icon mb-15px">
+            <input
+              type="text"
+              class="input is-rounded search-input"
+              placeholder="جستجوی حوضچه‌ها..."
+            />
+            <div class="form-icon">
+              <i aria-hidden="true" class="iconify" data-icon="feather:search"></i>
+            </div>
+          </div>
+          <VButton raised color="primary" @click="showCreatePond = true">
+            ثبت حوضچه جدید
+          </VButton>
+        </div> -->
       </div>
     </div>
 
@@ -340,9 +355,8 @@ let closing = () => (showCreatePond.value = false)
 }
 .items-center {
   display: flex;
-  align-items: start;
+  align-items: center !important;
   flex-direction: column;
-  margin: 10px 0;
 }
 .mb-15px {
   margin-bottom: 15px;
