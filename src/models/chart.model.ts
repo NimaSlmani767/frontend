@@ -13,7 +13,7 @@ export class PHChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'pH',
+    text: 'میزان اسیدیته',
     align: 'left',
   }
   labels: string[]
@@ -50,7 +50,7 @@ export class OxygenChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'Oxygen',
+    text: 'اکسیژن',
     align: 'left',
   }
   labels: string[]
@@ -124,7 +124,7 @@ export class ECChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'EC',
+    text: 'میزان شوری',
     align: 'left',
   }
   labels: string[]
@@ -161,7 +161,7 @@ export class AmmoniaChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'Ammonia',
+    text: 'آمونیا',
     align: 'left',
   }
   labels: string[]
@@ -198,7 +198,7 @@ export class NitriteChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'Nitrite',
+    text: 'نیتریت',
     align: 'left',
   }
   labels: string[]
@@ -235,7 +235,7 @@ export class NitrateChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'Nitrate',
+    text: 'نیترات',
     align: 'left',
   }
   labels: string[]
@@ -272,7 +272,7 @@ export class TemperatureChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'Temperature',
+    text: 'دما',
     align: 'left',
   }
   labels: string[]
