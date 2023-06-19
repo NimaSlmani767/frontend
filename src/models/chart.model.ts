@@ -161,7 +161,7 @@ export class AmmoniaChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'آمونیا',
+    text: 'آمونیاک',
     align: 'left',
   }
   labels: string[]
