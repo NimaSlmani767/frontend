@@ -9,6 +9,7 @@ import {
   FeedingChartOption,
   SamplingChartOption,
   TransparencyChartOption,
+  LossessChartOption,
 } from '/@src/models/manualMonitoring.model'
 import { ref } from 'vue'
 
@@ -22,6 +23,7 @@ const params = defineProps({
 const pondStore = usePondStore()
 
 const sampling = ref(new SamplingChartOption([], '#000', []))
+const lossess = ref(new LossessChartOption([], '#000', []))
 const feeding = ref(new FeedingChartOption([], '#000', []))
 const changingWater = ref(new ChangingWaterChartOption([], '#000', []))
 const transparency = ref(new TransparencyChartOption([], '#000', []))

@@ -72,7 +72,7 @@ const feedingChecking = handleSubmit(async (values) => {
       <form class="form-body form-body-responsive">
         <!--Fieldset-->
 
-        <div class="form-fieldset">
+        <div class="form-fieldset" v-if="!showPondField">
           <div class="columns is-multiline">
             <div class="column is-12">
               <Field v-slot="{ field, errorMessage }" name="pond">

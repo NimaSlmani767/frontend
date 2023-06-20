@@ -194,7 +194,7 @@ let filteredPonds = computed<IPond[]>(() => {
         <div class="form-fields-field mb-20px">
           <Field v-slot="{ field, errorMessage }" name="nitrite">
             <VField>
-              <label>نیتریته</label>
+              <label>نیتریت</label>
               <VControl :has-error="Boolean(errorMessage)">
                 <input
                   v-bind="field"

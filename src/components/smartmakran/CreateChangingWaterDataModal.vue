@@ -58,30 +58,7 @@ const createChangingWaterData = changingWaterHandleSubmit(async (values) => {
     <template #content>
       <form class="form-body form-body-responsive">
         <!--Fieldset-->
-        <div class="form-fieldset">
-          <div class="columns is-multiline">
-            <div class="column is-12">
-              <Field v-slot="{ field, errorMessage }" name="changingWaterAmount">
-                <VField>
-                  <label>میزان تعویض آب</label>
-                  <VControl :has-error="Boolean(errorMessage)">
-                    <input
-                      v-bind="field"
-                      type="text"
-                      class="input"
-                      placeholder=""
-                      autocomplete="given-name"
-                    />
-                    <p v-if="errorMessage" class="help is-danger">
-                      {{ errorMessage }}
-                    </p>
-                  </VControl>
-                </VField>
-              </Field>
-            </div>
-          </div>
-        </div>
-        <div class="form-fieldset">
+        <div class="form-fieldset" v-if="!showPondField">
           <div class="columns is-multiline">
             <div class="column is-12">
               <Field v-slot="{ field, errorMessage }" name="pond">
@@ -97,6 +74,29 @@ const createChangingWaterData = changingWaterHandleSubmit(async (values) => {
                         {{ pond.name }}
                       </option>
                     </select>
+                    <p v-if="errorMessage" class="help is-danger">
+                      {{ errorMessage }}
+                    </p>
+                  </VControl>
+                </VField>
+              </Field>
+            </div>
+          </div>
+        </div>
+        <div class="form-fieldset">
+          <div class="columns is-multiline">
+            <div class="column is-12">
+              <Field v-slot="{ field, errorMessage }" name="changingWaterAmount">
+                <VField>
+                  <label>میزان تعویض آب</label>
+                  <VControl :has-error="Boolean(errorMessage)">
+                    <input
+                      v-bind="field"
+                      type="text"
+                      class="input"
+                      placeholder=""
+                      autocomplete="given-name"
+                    />
                     <p v-if="errorMessage" class="help is-danger">
                       {{ errorMessage }}
                     </p>

@@ -100,3 +100,28 @@ export class TransparencyChartOption extends ChartBaseOption {
     this.labels = labels
   }
 }
+
+export class LossessChartOption extends ChartBaseOption {
+  series: ChartSeries[] = [{ name: 'تلفات', data: [] }]
+  colors: string[] = [
+    useThemeColors().primary,
+    useThemeColors().danger,
+    useThemeColors().lightText,
+  ]
+  title: ChartTitle = {
+    text: 'تلفات',
+    align: 'left',
+  }
+  labels: string[]
+  yaxis: ChartYaxis = {
+    min: 0,
+    max: 100,
+  }
+
+  constructor(data: number[], color: string, labels: string[]) {
+    super()
+    this.series[0].data = data
+    this.colors[0] = color
+    this.labels = labels
+  }
+}

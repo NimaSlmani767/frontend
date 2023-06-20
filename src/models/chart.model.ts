@@ -3,7 +3,7 @@ import { ChartBaseOption, ChartSeries, ChartTitle, ChartYaxis } from './base-cha
 
 export class PHChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'ph', data: [] },
+    { name: 'میزان اسیدیته', data: [] },
     { name: 'بهینه بالا', data: [1, 2, 4, 5] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -40,7 +40,7 @@ export class PHChartOptions extends ChartBaseOption {
 
 export class OxygenChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'oxygen', data: [] },
+    { name: 'اکسیژن', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -114,7 +114,7 @@ export class OrpChartOptions extends ChartBaseOption {
 
 export class ECChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'ec', data: [] },
+    { name: 'میزان شوری', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -151,7 +151,7 @@ export class ECChartOptions extends ChartBaseOption {
 
 export class AmmoniaChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'ammonia', data: [] },
+    { name: 'آمونیاک', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -188,7 +188,7 @@ export class AmmoniaChartOptions extends ChartBaseOption {
 
 export class NitriteChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'nitrite', data: [] },
+    { name: 'نیتریت', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -225,7 +225,7 @@ export class NitriteChartOptions extends ChartBaseOption {
 
 export class NitrateChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'nitrate', data: [] },
+    { name: 'نیترات', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -262,7 +262,7 @@ export class NitrateChartOptions extends ChartBaseOption {
 
 export class TemperatureChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'temperature', data: [] },
+    { name: 'دما', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
