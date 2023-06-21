@@ -54,6 +54,7 @@ const feedingChecking = handleSubmit(async (values) => {
     notyf.success({
       message: 'تلفات با موفقیت ثبت شد',
     })
+    props.closeModal()
     // farmStore.getFarmsList()
   } else {
     console.log(result)

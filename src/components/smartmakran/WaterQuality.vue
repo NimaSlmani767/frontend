@@ -60,6 +60,7 @@ const waterQualityHandler = handleSubmit(async (values) => {
     notyf.success({
       message: 'میزان کیفیت آب باموفقیت ثبت شد',
     })
+    props.closeModal()
     // farmStore.getFarmsList()
   } else {
     console.log(result)

@@ -1,5 +1,11 @@
 import { useThemeColors } from '../composable/useThemeColors'
-import { ChartBaseOption, ChartSeries, ChartTitle, ChartYaxis } from './base-chart.model'
+import {
+  ChartBaseOption,
+  ChartSeries,
+  ChartTitle,
+  ChartXaxis,
+  ChartYaxis,
+} from './base-chart.model'
 
 export class PHChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
@@ -21,7 +27,18 @@ export class PHChartOptions extends ChartBaseOption {
     min: 2,
     max: 8,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -58,7 +75,18 @@ export class OxygenChartOptions extends ChartBaseOption {
     min: 5,
     max: 10,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -95,7 +123,18 @@ export class OrpChartOptions extends ChartBaseOption {
     min: 300,
     max: 400,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -132,7 +171,18 @@ export class ECChartOptions extends ChartBaseOption {
     min: 17,
     max: 27,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -169,7 +219,18 @@ export class AmmoniaChartOptions extends ChartBaseOption {
     min: 0.3,
     max: 0.6,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -206,7 +267,18 @@ export class NitriteChartOptions extends ChartBaseOption {
     min: 0,
     max: 2,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -243,7 +315,18 @@ export class NitrateChartOptions extends ChartBaseOption {
     min: 0,
     max: 2,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
@@ -280,7 +363,18 @@ export class TemperatureChartOptions extends ChartBaseOption {
     min: 15,
     max: 40,
   }
-
+  xaxis: ChartXaxis = {
+    type: 'date',
+    labels: {
+      datetimeUTC: false,
+    },
+    tooltip: {
+      enabled: false,
+    },
+    title: {
+      text: 'روز گذشته از زمان کشت',
+    },
+  }
   constructor(
     data: number[],
     optimizeUp: number[],
