@@ -16,6 +16,52 @@ let filteredPonds = computed<IPond[]>(() => {
 let sensorData = JSON.parse(localStorage.getItem('sensorData'))
 sensorData.sort((a, b) => a.createdAt - b.createdAt)
 let closing = () => (showCreatePond.value = false)
+
+const getBiomass = (size, larv) => {
+  // console.log(array)
+  if (size) {
+    let sum = size.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue
+    }, 0)
+
+    let length = size.length
+    let avarage = sum / length
+    let getKiloGram = avarage / 1000
+
+    return getKiloGram * larv
+  } else {
+    return 0
+  }
+}
+const getAverageSize = (size) => {
+  if (size) {
+    let sum = size.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue
+    }, 0)
+
+    let length = size.length
+    let avarage = sum / length
+    let getKiloGram = avarage / 1000
+    return getKiloGram
+  } else {
+    return 0
+  }
+}
+const getFCR = (pond) => {
+  if (pond.samplingData.length) {
+    let res = pond.feedingData.map((obj) => obj.amount)
+    let sum = res.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue
+    }, 0)
+    let biomass = getBiomass(pond.samplingData[0].size, pond.larvaCount)
+    return sum / biomass
+  }
+}
+const getDencity = (pond) => {
+  let area = pond.dimensions.width * pond.dimensions.length
+  let dencity = pond.larvaCount / area
+  return dencity
+}
 </script>
 
 <template>
@@ -78,6 +124,15 @@ let closing = () => (showCreatePond.value = false)
             <!-- remove card start -->
             <!-- remove card end -->
             <div v-for="pond in filteredPonds" :key="pond.id" class="card-pond">
+              <!-- {{ getFCR(pond) }} -->
+              <!-- {{ getDencity(pond) }} -->
+              <!-- {{ sum(pond.feedingData) }} -->
+              <!-- {{
+                getBiomass(
+                  pond?.samplingData.length && pond?.samplingData[0].size,
+                  pond.larvaCount
+                )
+              }} -->
               <div class="card-pond-header">
                 <div>
                   <VIconBox color="primary">
@@ -99,9 +154,9 @@ let closing = () => (showCreatePond.value = false)
                   </div>
                 </div>
                 <div class="card-pond-header-detail">
-                  <RouterLink :to="{ name: 'app-pond-id', params: { id: pond.id } }">
+                  <!-- <RouterLink :to="{ name: 'app-pond-id', params: { id: pond.id } }">
                     <VButton color="primary" outlined raised> جزئیات </VButton>
-                  </RouterLink>
+                  </RouterLink> -->
                 </div>
               </div>
               <div class="card-pond-attrs">
@@ -111,7 +166,14 @@ let closing = () => (showCreatePond.value = false)
                       <img src="/@src/assets/smartmakran/icons-box/bio.svg" alt="" />
                     </div>
                     <h4>حجم توده زنده</h4>
-                    <p>12</p>
+                    <p>
+                      {{
+                        getBiomass(
+                          pond?.samplingData.length && pond?.samplingData[0].size,
+                          pond.larvaCount
+                        )
+                      }}
+                    </p>
                   </div>
                 </div>
                 <div class="card-pond-body">
@@ -120,7 +182,10 @@ let closing = () => (showCreatePond.value = false)
                       <img src="/@src/assets/smartmakran/icons-box/sal1.svg" alt="" />
                     </div>
                     <h4>میزان شوری</h4>
-                    <p>13</p>
+                    <p v-if="pond?.sensorData.length">
+                      {{ pond?.sensorData[0].ec }}
+                    </p>
+                    <p v-else>0</p>
                     <!-- <p v-for="pondDetail in sensorData" :key="pondDetail._id">
                       <span v-if="pond.id !== pondDetail.pond">-</span>
                       <span v-if="pond.id === pondDetail.pond">{{ pondDetail.ec }}</span>
@@ -133,7 +198,10 @@ let closing = () => (showCreatePond.value = false)
                       <img src="/@src/assets/smartmakran/icons-box/do1.svg" alt="" />
                     </div>
                     <h4>اکسیژن</h4>
-                    <p>12</p>
+                    <p v-if="pond?.sensorData.length">
+                      {{ pond?.sensorData[0].oxygen }}
+                    </p>
+                    <p v-else>0</p>
                   </div>
                 </div>
                 <div class="card-pond-body">
@@ -142,7 +210,13 @@ let closing = () => (showCreatePond.value = false)
                       <img src="/@src/assets/smartmakran/icons-box/size.svg" alt="" />
                     </div>
                     <h4>میانگین سایز</h4>
-                    <p>12</p>
+                    <p>
+                      {{
+                        getAverageSize(
+                          pond?.samplingData.length && pond?.samplingData[0].size
+                        )
+                      }}
+                    </p>
                   </div>
                 </div>
 
@@ -151,8 +225,11 @@ let closing = () => (showCreatePond.value = false)
                     <div class="card-pond-attr-icon">
                       <img src="/@src/assets/smartmakran/icons-box/ph.svg" alt="" />
                     </div>
-                    <h4>میزان اسیدیته</h4>
-                    <p>12</p>
+                    <h4>pH</h4>
+                    <p v-if="pond?.sensorData.length">
+                      {{ pond?.sensorData[0].ph }}
+                    </p>
+                    <p v-else>0</p>
                   </div>
                 </div>
                 <div class="card-pond-body">
@@ -161,12 +238,17 @@ let closing = () => (showCreatePond.value = false)
                       <img src="/@src/assets/smartmakran/icons-box/temp.svg" alt="" />
                     </div>
                     <h4>دما</h4>
-                    <p>12</p>
+                    <p v-if="pond?.sensorData.length">
+                      {{ pond?.sensorData[0].temperature }}
+                    </p>
+                    <p v-else>0</p>
                   </div>
                 </div>
               </div>
-              <div class="card-pond-footer">
-                <RouterLink :to="{ name: 'app-pond-id', params: { id: pond.id } }">
+              <div class="card-pond-footer" v-if="pond?.sensorData.length">
+                <RouterLink
+                  :to="{ name: 'app-pond-id', params: { id: pond?.sensorData[0].pond } }"
+                >
                   <VButton color="primary" outlined raised> جزئیات </VButton>
                 </RouterLink>
               </div>

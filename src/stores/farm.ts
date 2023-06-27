@@ -30,6 +30,7 @@ export const useFarmStore = defineStore({
       try {
         this.loading = true
         this.currentFarm = await getFarmDetails(id)
+        console.log(this.currentFarm.ponds)
       } catch (e) {
         this.error = e as Error
       } finally {

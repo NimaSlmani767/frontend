@@ -20,6 +20,7 @@ const pondStore = usePondStore()
 const currentPond = computed<IPond>(() => {
   return pondStore.currentPond || {}
 })
+console.log(currentPond)
 
 let closeFeedingChecking = () => (showFeedingCheckingModal.value = false)
 let closeLosses = () => (showLossesModal.value = false)
@@ -189,7 +190,7 @@ watchEffect(() => {
               <div class="card-pond-attr-icon">
                 <img src="/@src/assets/smartmakran/icons-box/ph.svg" alt="" />
               </div>
-              <h4>میزان اسیدیته</h4>
+              <h4>pH</h4>
               <p>12</p>
             </div>
           </div>

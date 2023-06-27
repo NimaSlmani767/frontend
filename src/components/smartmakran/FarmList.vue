@@ -116,13 +116,13 @@ let closing = () => (showCreateFarm.value = false)
           </TransitionGroup>
         </div>
 
-        <VFlexPagination
+        <!-- <VFlexPagination
           v-if="filteredFarms.length > 5"
           :item-per-page="10"
           :total-items="873"
-          :current-page="42"
+          :current-page="1"
           :max-links-displayed="7"
-        />
+        /> -->
       </div>
     </div>
   </div>

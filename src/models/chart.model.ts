@@ -9,7 +9,7 @@ import {
 
 export class PHChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'میزان اسیدیته', data: [] },
+    { name: 'pH', data: [] },
     { name: 'بهینه بالا', data: [1, 2, 4, 5] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -19,7 +19,7 @@ export class PHChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'میزان اسیدیته',
+    text: 'pH',
     align: 'left',
   }
   labels: string[]
@@ -67,7 +67,7 @@ export class OxygenChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'اکسیژن (ml/l)',
+    text: 'اکسیژن (mg/L)',
     align: 'left',
   }
   labels: string[]
@@ -105,7 +105,7 @@ export class OxygenChartOptions extends ChartBaseOption {
 
 export class OrpChartOptions extends ChartBaseOption {
   series: ChartSeries[] = [
-    { name: 'orp', data: [] },
+    { name: 'ORP', data: [] },
     { name: 'بهینه بالا', data: [] },
     { name: 'بهینه پایین', data: [] },
   ]
@@ -115,7 +115,7 @@ export class OrpChartOptions extends ChartBaseOption {
     useThemeColors().warning,
   ]
   title: ChartTitle = {
-    text: 'ORP(NV)',
+    text: 'ORP(mV)',
     align: 'left',
   }
   labels: string[]
