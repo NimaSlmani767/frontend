@@ -31,6 +31,19 @@ const transparency = ref(new TransparencyChartOption([], '#000', []))
 onMounted(async () => {
   // const result = await pondStore.manualMonitoring(params.id)
   const result = JSON.parse(localStorage.getItem('pond'))
+  console.log(result)
+  const samplingAmount = result.samplingData.map((s) => s.amount)
+  const feedingAmount = result.feedingData.map((s) => s.amount)
+  const changingWaterAmount = result.changingWaterData.map((s) => s.amount)
+  const transparencyAmount = result.transparencyData.map((s) => s.amount)
+  const lossesAmount = result.fatalityData.map((s) => s.amount)
+
+  const samplingCreatedAt = result.samplingData.map((s) => s.createdAt)
+  const feedingCreatedAt = result.feedingData.map((s) => s.createdAt)
+  const changingWaterCreatedAt = result.changingWaterData.map((s) => s.createdAt)
+  const transparencyCreatedAt = result.transparencyData.map((s) => s.createdAt)
+  const lossesCreatedAt = result.fatalityData.map((s) => s.createdAt)
+
   // update sampling diagram
   sampling.value = new SamplingChartOption(
     result.samplingData.map((s: any) => s.averageSize as number),
@@ -75,10 +88,11 @@ onMounted(async () => {
     )
   )
 })
+
 const activateDraggable = ref(false)
 console.log('object')
 console.log(sampling)
-console.log(sampling._rawValue.labels)
+console.log(sampling.value)
 const charts = ref([
   {
     height: sampling.value.chart.height,
@@ -176,6 +190,7 @@ const dragChartHandle = () => {
               :type="chart.type"
               :series="chart.series"
               :options="chart.options"
+              labels="[1,23,4]"
             >
             </ApexChart>
           </div>

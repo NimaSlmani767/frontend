@@ -392,7 +392,7 @@ onMounted(async () => {
   //   temperature.labels = dates
   // })
 })
-console.log(phData)
+console.log(temperature)
 </script>
 
 <template>

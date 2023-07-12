@@ -163,7 +163,7 @@ const getDencity = (pond) => {
               <i aria-hidden="true" class="fas fa-home"></i>
             </VIconBox>
             <div>
-              <h3>{{ currentPondStorage.name }}</h3>
+              <h3>{{ pondE.name }}</h3>
             </div>
           </div>
           <div class="card-pond-header-detail">
@@ -203,14 +203,21 @@ const getDencity = (pond) => {
           >
         </div>
 
-        <!-- <div class="card-pond-attrs">
+        <div class="card-pond-attrs">
           <div class="card-pond-body">
             <div class="card-pond-attr">
               <div class="card-pond-attr-icon">
                 <img src="/@src/assets/smartmakran/icons-box/bio.svg" alt="" />
               </div>
               <h4>حجم توده زنده</h4>
-              <p>12</p>
+              <p>
+                {{
+                  getBiomass(
+                    pondE?.samplingData.length && pondE?.samplingData[0].size,
+                    pondE.larvaCount
+                  )
+                }}
+              </p>
             </div>
           </div>
           <div class="card-pond-body">
@@ -219,7 +226,13 @@ const getDencity = (pond) => {
                 <img src="/@src/assets/smartmakran/icons-box/sal1.svg" alt="" />
               </div>
               <h4>میزان شوری</h4>
-              <p>32</p>
+              <p>
+                {{ pondE?.sensorData[0]?.ec ? pondE?.sensorData[0].ec : 0 }}
+              </p>
+              <!-- <p v-for="pondDetail in sensorData" :key="pondDetail._id">
+                      <span v-if="pond.id !== pondDetail.pond">-</span>
+                      <span v-if="pond.id === pondDetail.pond">{{ pondDetail.ec }}</span>
+                    </p> -->
             </div>
           </div>
           <div class="card-pond-body">
@@ -228,7 +241,9 @@ const getDencity = (pond) => {
                 <img src="/@src/assets/smartmakran/icons-box/do1.svg" alt="" />
               </div>
               <h4>اکسیژن</h4>
-              <p>12</p>
+              <p>
+                {{ pondE?.sensorData[0]?.oxygen ? pondE?.sensorData[0]?.oxygen : 0 }}
+              </p>
             </div>
           </div>
           <div class="card-pond-body">
@@ -237,7 +252,13 @@ const getDencity = (pond) => {
                 <img src="/@src/assets/smartmakran/icons-box/size.svg" alt="" />
               </div>
               <h4>میانگین سایز</h4>
-              <p>12</p>
+              <p>
+                {{
+                  getAverageSize(
+                    pondE?.samplingData.length && pondE?.samplingData[0].size
+                  )
+                }}
+              </p>
             </div>
           </div>
 
@@ -247,7 +268,9 @@ const getDencity = (pond) => {
                 <img src="/@src/assets/smartmakran/icons-box/ph.svg" alt="" />
               </div>
               <h4>pH</h4>
-              <p>12</p>
+              <p>
+                {{ pondE?.sensorData[0]?.ph ? pondE?.sensorData[0]?.ph : 0 }}
+              </p>
             </div>
           </div>
           <div class="card-pond-body">
@@ -256,10 +279,16 @@ const getDencity = (pond) => {
                 <img src="/@src/assets/smartmakran/icons-box/temp.svg" alt="" />
               </div>
               <h4>دما</h4>
-              <p>12</p>
+              <p>
+                {{
+                  pondE?.sensorData[0]?.temperature
+                    ? pondE?.sensorData[0]?.temperature
+                    : 0
+                }}
+              </p>
             </div>
           </div>
-        </div> -->
+        </div>
 
         <div class="card-pond-footer">
           <RouterLink
