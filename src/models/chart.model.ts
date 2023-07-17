@@ -19,50 +19,35 @@ export class PHChartOptions extends ChartBaseOption {
   //   useThemeColors().primary,
   //   useThemeColors().warning,
   // ]
-  series: ChartSeries[] = [{ data: [] }]
+
   // colors: string[] = [
   //   useThemeColors().primary,
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 0,
-        y2: 50,
+        y: 1,
+        y2: 12,
         borderColor: useThemeColors().danger,
         fillColor: useThemeColors().danger,
         opacity: 1,
       },
       {
-        y: 15,
-        y2: 45,
+        y: 8,
+        y2: 9,
         borderColor: useThemeColors().warning,
         fillColor: useThemeColors().warning,
         opacity: 1,
       },
       {
-        y: 25,
-        y2: 35,
+        y: 8.2,
+        y2: 8.5,
         borderColor: useThemeColors().green,
         fillColor: useThemeColors().green,
         opacity: 1,
-      },
-    ],
-  }
-  annotations: ChartAnnotations = {
-    yaxis: [
-      {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
-      },
-      {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
       },
     ],
   }
@@ -116,19 +101,29 @@ export class OxygenChartOptions extends ChartBaseOption {
   //   useThemeColors().primary,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
+        y: 3,
+        y2: 15,
+        borderColor: useThemeColors().danger,
+        fillColor: useThemeColors().danger,
+        opacity: 1,
       },
       {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
+        y: 2.5,
+        y2: 15,
+        borderColor: useThemeColors().warning,
+        fillColor: useThemeColors().warning,
+        opacity: 1,
+      },
+      {
+        y: 4,
+        y2: 5,
+        borderColor: useThemeColors().green,
+        fillColor: useThemeColors().green,
+        opacity: 1,
       },
     ],
   }
@@ -181,19 +176,29 @@ export class OrpChartOptions extends ChartBaseOption {
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
+        y: 0,
+        y2: 500,
+        borderColor: useThemeColors().danger,
+        fillColor: useThemeColors().danger,
+        opacity: 1,
       },
       {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
+        y: 100,
+        y2: 400,
+        borderColor: useThemeColors().warning,
+        fillColor: useThemeColors().warning,
+        opacity: 1,
+      },
+      {
+        y: 200,
+        y2: 250,
+        borderColor: useThemeColors().green,
+        fillColor: useThemeColors().green,
+        opacity: 1,
       },
     ],
   }
@@ -246,19 +251,29 @@ export class ECChartOptions extends ChartBaseOption {
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
+        y: 0,
+        y2: 50,
+        borderColor: useThemeColors().danger,
+        fillColor: useThemeColors().danger,
+        opacity: 1,
       },
       {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
+        y: 10,
+        y2: 40,
+        borderColor: useThemeColors().warning,
+        fillColor: useThemeColors().warning,
+        opacity: 1,
+      },
+      {
+        y: 20,
+        y2: 30,
+        borderColor: useThemeColors().green,
+        fillColor: useThemeColors().green,
+        opacity: 1,
       },
     ],
   }
@@ -311,19 +326,29 @@ export class AmmoniaChartOptions extends ChartBaseOption {
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
+        y: 0,
+        y2: 2,
+        borderColor: useThemeColors().danger,
+        fillColor: useThemeColors().danger,
+        opacity: 1,
       },
       {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
+        y: 0,
+        y2: 1,
+        borderColor: useThemeColors().warning,
+        fillColor: useThemeColors().warning,
+        opacity: 1,
+      },
+      {
+        y: 0,
+        y2: 0.1,
+        borderColor: useThemeColors().green,
+        fillColor: useThemeColors().green,
+        opacity: 1,
       },
     ],
   }
@@ -376,19 +401,29 @@ export class NitriteChartOptions extends ChartBaseOption {
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
-        y: 5,
-        y2: 8,
-        borderColor: '#000',
-        fillColor: '#400',
+        y: 0,
+        y2: 2,
+        borderColor: useThemeColors().danger,
+        fillColor: useThemeColors().danger,
+        opacity: 1,
       },
       {
-        y: 1,
-        y2: 9,
-        borderColor: '#000',
-        fillColor: '#FEB019',
+        y: 0,
+        y2: 1,
+        borderColor: useThemeColors().warning,
+        fillColor: useThemeColors().warning,
+        opacity: 1,
+      },
+      {
+        y: 0,
+        y2: 0.1,
+        borderColor: useThemeColors().green,
+        fillColor: useThemeColors().green,
+        opacity: 1,
       },
     ],
   }
@@ -431,31 +466,31 @@ export class NitriteChartOptions extends ChartBaseOption {
 }
 
 export class NitrateChartOptions extends ChartBaseOption {
-  series: ChartSeries[] = [{ data: [] }]
   // colors: string[] = [
   //   useThemeColors().primary,
   //   useThemeColors().green,
   //   useThemeColors().warning,
   // ]
+  series: ChartSeries[] = [{ data: [] }]
   annotations: ChartAnnotations = {
     yaxis: [
       {
         y: 0,
-        y2: 50,
+        y2: 2,
         borderColor: useThemeColors().danger,
         fillColor: useThemeColors().danger,
         opacity: 1,
       },
       {
-        y: 15,
-        y2: 45,
+        y: 0,
+        y2: 1,
         borderColor: useThemeColors().warning,
         fillColor: useThemeColors().warning,
         opacity: 1,
       },
       {
-        y: 25,
-        y2: 35,
+        y: 0,
+        y2: 0.1,
         borderColor: useThemeColors().green,
         fillColor: useThemeColors().green,
         opacity: 1,
