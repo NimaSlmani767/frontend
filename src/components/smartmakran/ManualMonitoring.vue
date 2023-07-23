@@ -55,7 +55,6 @@ onMounted(async () => {
     )
   )
 
-  console.log(changingWater)
   // update changing water diagram
   changingWater.value = new ChangingWaterChartOption(
     currentPond?.changingWaterData?.map((s: any) => s.amount as number),

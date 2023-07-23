@@ -78,20 +78,20 @@ export class FeedingChartOption extends ChartBaseOption {
 }
 
 export class ChangingWaterChartOption extends ChartBaseOption {
-  series: ChartSeries[] = [{ name: 'تعویض آب', data: [] }]
+  series: ChartSeries[] = [{ name: 'غذادهی', data: [] }]
   colors: string[] = [
     useThemeColors().primary,
     useThemeColors().danger,
     useThemeColors().lightText,
   ]
   title: ChartTitle = {
-    text: 'تعویض آب (درصد)',
+    text: 'غذادهی (kg)',
     align: 'right',
   }
   labels: string[]
   yaxis: ChartYaxis = {
     min: 0,
-    max: 100,
+    max: 30,
   }
   xaxis: ChartXaxis = {
     type: 'datetime',
