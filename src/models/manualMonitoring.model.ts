@@ -24,14 +24,15 @@ export class SamplingChartOption extends ChartBaseOption {
     max: 20,
   }
   xaxis: ChartXaxis = {
-    type: 'date',
+    type: 'datetime',
     labels: {
-      datetimeUTC: false,
+      datetimeUTC: true,
+      hideOverlappingLabels: true,
     },
     tooltip: {
       enabled: false,
     },
-    tickAmount: 5,
+    // tickAmount: 5,
   }
   constructor(data: number[], color: string, labels: string[]) {
     super()
@@ -42,10 +43,7 @@ export class SamplingChartOption extends ChartBaseOption {
 }
 
 export class FeedingChartOption extends ChartBaseOption {
-  series: ChartSeries[] = [
-    { name: 'غذادهی', data: [] },
-    { name: 'چک غذا', data: [] },
-  ]
+  series: ChartSeries[] = [{ name: 'غذادهی', data: [] }]
   colors: string[] = [
     useThemeColors().primary,
     useThemeColors().danger,
@@ -61,14 +59,15 @@ export class FeedingChartOption extends ChartBaseOption {
     max: 30,
   }
   xaxis: ChartXaxis = {
-    type: 'date',
+    type: 'datetime',
     labels: {
-      datetimeUTC: false,
+      datetimeUTC: true,
+      hideOverlappingLabels: true,
     },
     tooltip: {
       enabled: false,
     },
-    tickAmount: 5,
+    // tickAmount: 5,
   }
   constructor(data: number[], color: string, labels: string[]) {
     super()
@@ -95,14 +94,15 @@ export class ChangingWaterChartOption extends ChartBaseOption {
     max: 100,
   }
   xaxis: ChartXaxis = {
-    type: 'date',
+    type: 'datetime',
     labels: {
-      datetimeUTC: false,
+      datetimeUTC: true,
+      hideOverlappingLabels: true,
     },
     tooltip: {
       enabled: false,
     },
-    tickAmount: 5,
+    // tickAmount: 5,
   }
   constructor(data: number[], color: string, labels: string[]) {
     super()
@@ -130,14 +130,15 @@ export class TransparencyChartOption extends ChartBaseOption {
     max: 100,
   }
   xaxis: ChartXaxis = {
-    type: 'date',
+    type: 'datetime',
     labels: {
-      datetimeUTC: false,
+      datetimeUTC: true,
+      hideOverlappingLabels: true,
     },
     tooltip: {
       enabled: false,
     },
-    tickAmount: 5,
+    // tickAmount: 5,
   }
   constructor(data: number[], color: string, labels: string[]) {
     super()
@@ -165,14 +166,15 @@ export class LossessChartOption extends ChartBaseOption {
     max: 50,
   }
   xaxis: ChartXaxis = {
-    type: 'date',
+    type: 'datetime',
     labels: {
-      datetimeUTC: false,
+      datetimeUTC: true,
+      hideOverlappingLabels: true,
     },
     tooltip: {
       enabled: false,
     },
-    tickAmount: 5,
+    // tickAmount: 5,
   }
   constructor(data: number[], color: string, labels: string[]) {
     super()
