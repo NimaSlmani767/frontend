@@ -35,21 +35,57 @@ const charts = ref()
 onMounted(async () => {
   // const result = await pondStore.manualMonitoring(params.id)
   const result = JSON.parse(localStorage.getItem('pond'))
-
+  console.log(currentPond.samplingData)
+  console.log(currentPond.feedingData)
+  console.log(currentPond.changingWaterData)
   // update sampling diagram
+  let sortSamplingData = currentPond?.samplingData.sort(function (left, right) {
+    return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  })
+
+  let sortFeedingData = currentPond?.feedingData.sort(function (left, right) {
+    return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  })
+
+  let sortChangingWaterData = currentPond.changingWaterData
+    ? currentPond.changingWaterData.sort(function (left, right) {
+        return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+      })
+    : []
+
+  let sortTransparencyData = currentPond?.transparencyData.sort(function (left, right) {
+    return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  })
+  let sortFatalityData = currentPond?.fatalityData.sort(function (left, right) {
+    return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  })
+
+  // currentPond.feedingData.sort(function (left, right) {
+  //   return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  // })
+  // currentPond.changingWaterData.sort(function (left, right) {
+  //   return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  // })
+  // currentPond.transparencyData.sort(function (left, right) {
+  //   return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  // })
+  // currentPond.fatalityData.sort(function (left, right) {
+  //   return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+  // })
+
   sampling.value = new SamplingChartOption(
-    currentPond.samplingData.map((s: any) => s.size as number),
+    sortSamplingData.map((s: any) => s.size as number),
     '#000',
-    currentPond.samplingData.map(
+    sortSamplingData.map(
       (s: any) => moment(s.createdAt).format('jYYYY-jMM-jDD HH:mm:ss')
       // moment(moment.now()).diff(s.createdAt, 'days')
     )
   )
   // update feeding diagram
   feeding.value = new FeedingChartOption(
-    currentPond.feedingData.map((s: any) => s.amount as number),
+    sortFeedingData.map((s: any) => s.amount as number),
     '#000',
-    currentPond.feedingData.map(
+    sortFeedingData.map(
       (s: any) => moment(s.createdAt).format('jYYYY-jMM-jDD HH:mm:ss')
       // moment(moment.now()).diff(s.createdAt, 'days')
     )
@@ -57,9 +93,9 @@ onMounted(async () => {
 
   // update changing water diagram
   changingWater.value = new ChangingWaterChartOption(
-    currentPond?.changingWaterData?.map((s: any) => s.amount as number),
+    sortChangingWaterData.map((s: any) => s.amount as number),
     '#000',
-    currentPond?.changingWaterData?.map(
+    sortChangingWaterData.map(
       (s: any) => moment(s.createdAt).format('jYYYY-jMM-jDD HH:mm:ss')
       // moment(moment.now()).diff(s.createdAt, 'days')
     )
@@ -67,18 +103,18 @@ onMounted(async () => {
 
   // update transparency diagram
   transparency.value = new TransparencyChartOption(
-    currentPond.transparencyData.map((s: any) => s.amount as number),
+    sortTransparencyData.map((s: any) => s.amount as number),
     '#000',
-    currentPond.transparencyData.map(
+    sortTransparencyData.map(
       (s: any) => moment(s.createdAt).format('jYYYY-jMM-jDD HH:mm:ss')
       // moment(moment.now()).diff(s.createdAt, 'days')
     )
   )
 
   lossess.value = new LossessChartOption(
-    currentPond.fatalityData.map((s: any) => s.amount as number),
+    sortFatalityData.map((s: any) => s.amount as number),
     '#000',
-    currentPond.fatalityData.map(
+    sortFatalityData.map(
       (s: any) => moment(s.createdAt).format('jYYYY-jMM-jDD HH:mm:ss')
       // moment(moment.now()).diff(s.createdAt, 'days')
     )

@@ -4,6 +4,7 @@ import { usePondStore } from '/@src/stores/pond'
 import { IPond } from '/@src/interfaces/pond.interface'
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import moment from 'moment-jalaali'
 
 const route = useRoute()
 
@@ -25,6 +26,8 @@ const currentPond = computed<IPond>(() => {
   return pondStore.currentPond || {}
 })
 
+console.log(currentPond)
+
 let closeFeedingChecking = () => (showFeedingCheckingModal.value = false)
 let closeLosses = () => (showLossesModal.value = false)
 let closeWaterQualityModal = () => (showWaterQualityModal.value = false)
@@ -34,6 +37,26 @@ let closeSamplingDataModal = () => (showSamplingDataModal.value = false)
 let closeTransparencyDataModal = () => (showTransparencyDataModal.value = false)
 
 const pondE = JSON.parse(localStorage.getItem('pond'))
+
+const sortedActivities = pondE.sensorData.sort(function (left, right) {
+  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+})
+
+const sortSampelingData = pondE.samplingData.sort(function (left, right) {
+  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+})
+
+const sortFeedingData = pondE.feedingData.sort(function (left, right) {
+  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+})
+
+const sortTransparencyData = pondE.transparencyData.sort(function (left, right) {
+  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+})
+
+const sortFatalityData = pondE.fatalityData.sort(function (left, right) {
+  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+})
 
 watchEffect(() => {
   const sensorData = JSON.parse(localStorage.getItem('sensorData'))
@@ -53,12 +76,12 @@ const getBiomass = (size, larv) => {
     let sum = size.reduce((accumulator, currentValue) => {
       return accumulator + currentValue
     }, 0)
-    console.log(size)
+    // console.log(size)
     let length = size.length
     let avarage = sum / length
     let getKiloGram = avarage / 1000
-    console.log(getKiloGram)
-    console.log(larv)
+    // console.log(getKiloGram)/
+    // console.log(larv)
     return getKiloGram * larv
   } else {
     return 0
@@ -216,7 +239,8 @@ const getDencity = (pond) => {
               <p>
                 {{
                   getBiomass(
-                    pondE?.samplingData.length && pondE?.samplingData[0].size,
+                    sortSampelingData.length &&
+                      sortSampelingData[sortSampelingData.length - 1].size,
                     pondE.larvaCount
                   )
                 }}
@@ -230,7 +254,11 @@ const getDencity = (pond) => {
               </div>
               <h4>میزان شوری</h4>
               <p>
-                {{ pondE?.sensorData[0]?.ec ? pondE?.sensorData[0].ec : 0 }}
+                {{
+                  sortedActivities.length
+                    ? sortedActivities[sortedActivities.length - 1].ec
+                    : 0
+                }}
               </p>
               <!-- <p v-for="pondDetail in sensorData" :key="pondDetail._id">
                       <span v-if="pond.id !== pondDetail.pond">-</span>
@@ -245,7 +273,11 @@ const getDencity = (pond) => {
               </div>
               <h4>اکسیژن</h4>
               <p>
-                {{ pondE?.sensorData[0]?.oxygen ? pondE?.sensorData[0]?.oxygen : 0 }}
+                {{
+                  sortedActivities
+                    ? sortedActivities[sortedActivities.length - 1]?.oxygen
+                    : 0
+                }}
               </p>
             </div>
           </div>
@@ -258,7 +290,8 @@ const getDencity = (pond) => {
               <p>
                 {{
                   getAverageSize(
-                    pondE?.samplingData.length && pondE?.samplingData[0].size
+                    sortSampelingData.length &&
+                      sortSampelingData[sortSampelingData.length - 1].size
                   )
                 }}
               </p>
@@ -272,7 +305,11 @@ const getDencity = (pond) => {
               </div>
               <h4>pH</h4>
               <p>
-                {{ pondE?.sensorData[0]?.ph ? pondE?.sensorData[0]?.ph : 0 }}
+                {{
+                  sortedActivities.length
+                    ? sortedActivities[sortedActivities.length - 1]?.ph
+                    : 0
+                }}
               </p>
             </div>
           </div>
@@ -284,8 +321,8 @@ const getDencity = (pond) => {
               <h4>دما</h4>
               <p>
                 {{
-                  pondE?.sensorData[0]?.temperature
-                    ? pondE?.sensorData[0]?.temperature
+                  sortedActivities.length
+                    ? sortedActivities[sortedActivities.length - 1]?.temperature
                     : 0
                 }}
               </p>
