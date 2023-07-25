@@ -17,6 +17,8 @@ const showWaterDataModal = ref(false)
 const showFeedingDataModal = ref(false)
 const showSamplingDataModal = ref(false)
 const showTransparencyDataModal = ref(false)
+const sortedActivities = ref([])
+const sortSampelingData = ref([])
 onMounted(async () => {
   await pondStore.getPond(route.params.id)
 })
@@ -25,8 +27,6 @@ const pondStore = usePondStore()
 const currentPond = computed<IPond>(() => {
   return pondStore.currentPond || {}
 })
-
-console.log(currentPond)
 
 let closeFeedingChecking = () => (showFeedingCheckingModal.value = false)
 let closeLosses = () => (showLossesModal.value = false)
@@ -38,25 +38,25 @@ let closeTransparencyDataModal = () => (showTransparencyDataModal.value = false)
 
 const pondE = JSON.parse(localStorage.getItem('pond'))
 
-const sortedActivities = pondE.sensorData.sort(function (left, right) {
-  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
-})
+console.log(currentPond)
 
-const sortSampelingData = pondE.samplingData.sort(function (left, right) {
-  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
-})
+const sortFeedingData = currentPond.value.feedingData
+  ? currentPond.value.feedingData.sort(function (left, right) {
+      return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+    })
+  : []
 
-const sortFeedingData = pondE.feedingData.sort(function (left, right) {
-  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
-})
+const sortTransparencyData = currentPond.value.transparencyData
+  ? currentPond.value.transparencyData.sort(function (left, right) {
+      return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+    })
+  : []
 
-const sortTransparencyData = pondE.transparencyData.sort(function (left, right) {
-  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
-})
-
-const sortFatalityData = pondE.fatalityData.sort(function (left, right) {
-  return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
-})
+const sortFatalityData = currentPond.value.fatalityData
+  ? currentPond.value.fatalityData.sort(function (left, right) {
+      return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+    })
+  : []
 
 watchEffect(() => {
   const sensorData = JSON.parse(localStorage.getItem('sensorData'))
@@ -67,6 +67,17 @@ watchEffect(() => {
   // console.log(currentPond._value)
   // console.log(currentPond.name)
   // console.log(currentPond.larvaCount)
+  sortedActivities.value = currentPond.value.sensorData
+    ? currentPond.value.sensorData.sort(function (left, right) {
+        return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+      })
+    : []
+
+  sortSampelingData.value = currentPond.value.samplingData
+    ? currentPond.value.samplingData.sort(function (left, right) {
+        return moment.utc(left.createdAt).diff(moment.utc(right.createdAt))
+      })
+    : []
 })
 const currentPondStorage = localStorage.getItem('pond')
 
@@ -241,7 +252,7 @@ const getDencity = (pond) => {
                   getBiomass(
                     sortSampelingData.length &&
                       sortSampelingData[sortSampelingData.length - 1].size,
-                    pondE.larvaCount
+                    currentPond.larvaCount
                   )
                 }}
               </p>

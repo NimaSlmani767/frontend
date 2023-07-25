@@ -60,8 +60,6 @@ function getPond() {
 
   filteringSensor.value = sortedSensor
   filteringoptimal.value = optimalSensor
-  console.log('filteringSensor------------------------------')
-  console.log(filteringSensor)
 }
 getPond()
 function extractData(data: any, optimal: any) {
@@ -367,12 +365,11 @@ const charts = ref([
   },
 ])
 
-// console.log(temperature.series)
 const dragChartHandle = () => {
   localStorage.setItem('chart_automatic_monitoring', JSON.stringify(charts._rawValue))
 }
 const activateDraggable = ref(false)
-console.log(charts)
+
 onMounted(async () => {
   // socket.on('message', (data) => {
   //   const {
